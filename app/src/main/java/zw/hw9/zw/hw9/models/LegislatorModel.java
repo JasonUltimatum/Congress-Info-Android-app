@@ -1,6 +1,11 @@
 package zw.hw9.zw.hw9.models;
 
+import android.content.Context;
 import android.graphics.Bitmap;
+import android.media.Image;
+import android.widget.ImageView;
+
+import com.squareup.picasso.Picasso;
 
 /**
  * Created by et on 11/20/16.
@@ -59,6 +64,6 @@ public class LegislatorModel {
     }
 
     public void setPhoto(String photo) {
-        this.photo = photo;
+        this.photo=photo;
     }
 }

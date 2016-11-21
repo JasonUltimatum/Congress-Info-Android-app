@@ -2,6 +2,7 @@ package zw.hw9;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
@@ -12,6 +13,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -45,7 +47,11 @@ import zw.hw9.zw.hw9.models.LegislatorModel;
 public class LegisFragment extends Fragment implements TabHost.OnTabChangeListener {
     private RelativeLayout layout;
     private String[] stateUrl = {"http://104.198.0.197:8080/legislators?apikey=74b463c521c84ca5b7dd3d30ac0417f5&per_page=all"};
+    private String[] houseUrl = {"http://104.198.0.197:8080/legislators?chamber=house&apikey=74b463c521c84ca5b7dd3d30ac0417f5&per_page=all"};
+    private String[] senateUrl ={"http://104.198.0.197:8080/legislators?chamber=senate&apikey=74b463c521c84ca5b7dd3d30ac0417f5&per_page=all"};
     ListView mainList;
+    ListView houseList;
+    ListView senateList;
     private String[] texts ={"I","KNOW","YOU","SOME","WHERE","OUT","THERE"};
     public LegisFragment() {
         // Required empty public constructor
@@ -80,18 +86,30 @@ public class LegisFragment extends Fragment implements TabHost.OnTabChangeListen
         tbHost.setOnTabChangedListener(this);
 
         mainList = (ListView)layout.findViewById(R.id.listviewstate);
-        //mainList.setAdapter(new ArrayAdapter<String>(getActivity(),android.R.layout.simple_list_item_1,new ArrayList<String>()));
-
+        houseList =(ListView)layout.findViewById(R.id.listviewhouse);
+        senateList=(ListView)layout.findViewById(R.id.listviewsenate);
+        mainList.setOnItemClickListener(onListClick);
         new LegTask().execute(stateUrl);
+        new LegHouseTask().execute(houseUrl);
+        new LegSenateTask().execute(senateUrl);
         return layout;
     }
+    private AdapterView.OnItemClickListener onListClick = new AdapterView.OnItemClickListener(){
+
+        @Override
+        public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+            Intent intent = new Intent(getActivity(),legDetailActivity.class);
+            intent.putExtra("Test","god lin wen as dog");
+            startActivity(intent);
+        }
+    };
     class LegTask extends AsyncTask<String,String,List<LegislatorModel>>{
         //ArrayAdapter<String> adapter;
         BufferedReader reader;
         HttpURLConnection connection;
         @Override
         protected void onPreExecute() {
-           //adapter =(ArrayAdapter<String>)mainList.getAdapter();
+            //adapter =(ArrayAdapter<String>)mainList.getAdapter();
         }
 
         @Override
@@ -146,7 +164,7 @@ public class LegisFragment extends Fragment implements TabHost.OnTabChangeListen
                     connection.disconnect();
                 }
                 try {
-                   if(reader!=null) reader.close();
+                    if(reader!=null) reader.close();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -166,9 +184,181 @@ public class LegisFragment extends Fragment implements TabHost.OnTabChangeListen
             //TODO need to set data to the list
             LegislatorAdapter adapter = new LegislatorAdapter(getActivity().getApplicationContext(),R.layout.legrow,result);
             mainList.setAdapter(adapter);
+
         }
 
     }
+    class LegHouseTask extends AsyncTask<String,String,List<LegislatorModel>>{
+        //ArrayAdapter<String> adapter;
+        BufferedReader reader;
+        HttpURLConnection connection;
+        @Override
+        protected void onPreExecute() {
+            //adapter =(ArrayAdapter<String>)mainList.getAdapter();
+        }
+
+        @Override
+        protected List<LegislatorModel> doInBackground(String... urls) {
+            List<LegislatorModel> lModelList = new ArrayList<>();
+            for(String item:texts){
+                //publishProgress(item);
+            }
+            try {
+                URL url = new URL(urls[0]);
+
+                connection =(HttpURLConnection) url.openConnection();
+                connection.connect();
+                InputStream stream = connection.getInputStream();
+                reader = new BufferedReader(new InputStreamReader(stream));
+                String line="";
+                StringBuffer buffer = new StringBuffer();
+                while((line = reader.readLine())!=null){
+                    buffer.append(line);
+                }
+                String finalJson= buffer.toString();
+                JSONObject parentObject = new JSONObject(finalJson);
+                JSONArray parentArray = parentObject.getJSONArray("results");
+
+                for(int i=0;i<parentArray.length();i++){
+                    LegislatorModel lModel = new LegislatorModel();
+
+                    JSONObject finalObject = parentArray.getJSONObject(i);
+                    String party = finalObject.getString("party");
+                    String bioguide_id = finalObject.getString("bioguide_id");
+                    String name = finalObject.getString("last_name")+", "+finalObject.getString("first_name");
+                    String district = finalObject.getString("district");
+                    String state = finalObject.getString("state_name");
+                    lModel.setBioguide_id(bioguide_id);
+                    lModel.setDistrict(district);
+                    lModel.setParty(party);
+                    lModel.setName(name);
+                    lModel.setState(state);
+
+                    lModelList.add(lModel);
+                }
+                //publishProgress(buffer.toString());
+
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            } finally {
+                if(connection!=null) {
+                    connection.disconnect();
+                }
+                try {
+                    if(reader!=null) reader.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            return lModelList;
+        }
+
+        @Override
+        protected void onProgressUpdate(String... values) {
+
+
+        }
+
+        @Override
+        protected void onPostExecute(List<LegislatorModel> result) {
+            //TODO need to set data to the list
+            LegislatorAdapter adapter = new LegislatorAdapter(getActivity().getApplicationContext(),R.layout.legrow,result);
+            houseList.setAdapter(adapter);
+
+        }
+
+    }
+    class LegSenateTask extends AsyncTask<String,String,List<LegislatorModel>>{
+        //ArrayAdapter<String> adapter;
+        BufferedReader reader;
+        HttpURLConnection connection;
+        @Override
+        protected void onPreExecute() {
+            //adapter =(ArrayAdapter<String>)mainList.getAdapter();
+        }
+
+        @Override
+        protected List<LegislatorModel> doInBackground(String... urls) {
+            List<LegislatorModel> lModelList = new ArrayList<>();
+            for(String item:texts){
+                //publishProgress(item);
+            }
+            try {
+                URL url = new URL(urls[0]);
+
+                connection =(HttpURLConnection) url.openConnection();
+                connection.connect();
+                InputStream stream = connection.getInputStream();
+                reader = new BufferedReader(new InputStreamReader(stream));
+                String line="";
+                StringBuffer buffer = new StringBuffer();
+                while((line = reader.readLine())!=null){
+                    buffer.append(line);
+                }
+                String finalJson= buffer.toString();
+                JSONObject parentObject = new JSONObject(finalJson);
+                JSONArray parentArray = parentObject.getJSONArray("results");
+
+                for(int i=0;i<parentArray.length();i++){
+                    LegislatorModel lModel = new LegislatorModel();
+
+                    JSONObject finalObject = parentArray.getJSONObject(i);
+                    String party = finalObject.getString("party");
+                    String bioguide_id = finalObject.getString("bioguide_id");
+                    String name = finalObject.getString("last_name")+", "+finalObject.getString("first_name");
+                    String district = finalObject.getString("district");
+                    String state = finalObject.getString("state_name");
+                    lModel.setBioguide_id(bioguide_id);
+                    lModel.setDistrict(district);
+                    lModel.setParty(party);
+                    lModel.setName(name);
+                    lModel.setState(state);
+
+                    lModelList.add(lModel);
+                }
+                //publishProgress(buffer.toString());
+
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            } finally {
+                if(connection!=null) {
+                    connection.disconnect();
+                }
+                try {
+                    if(reader!=null) reader.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            return lModelList;
+        }
+
+        @Override
+        protected void onProgressUpdate(String... values) {
+
+
+        }
+
+        @Override
+        protected void onPostExecute(List<LegislatorModel> result) {
+            //TODO need to set data to the list
+            LegislatorAdapter adapter = new LegislatorAdapter(getActivity().getApplicationContext(),R.layout.legrow,result);
+            senateList.setAdapter(adapter);
+
+        }
+
+    }
+
     class LegislatorAdapter extends ArrayAdapter{
         private List<LegislatorModel> legList;
         private int resource;
@@ -196,6 +386,7 @@ public class LegisFragment extends Fragment implements TabHost.OnTabChangeListen
             tvName = (TextView)convertView.findViewById(R.id.legn);
             tvPSD = (TextView)convertView.findViewById(R.id.legpsd);
             //Picasso.with(context).load(legList.get(position).getPhoto()).into(photo);
+
             tvName.setText(legList.get(position).getName());
             tvPSD.setText("("+legList.get(position).getParty()+")"+legList.get(position).getState()+" - District: "+legList.get(position).getDistrict());
             return convertView;

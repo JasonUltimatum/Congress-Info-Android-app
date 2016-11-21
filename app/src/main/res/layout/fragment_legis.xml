@@ -61,6 +61,10 @@
                     android:layout_height="match_parent"
                     android:orientation="vertical">
 
+                    <ListView
+                        android:layout_width="334dp"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/listviewhouse" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -69,6 +73,10 @@
                     android:layout_height="match_parent"
                     android:orientation="vertical">
 
+                    <ListView
+                        android:layout_width="334dp"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/listviewsenate" />
                 </LinearLayout>
             </FrameLayout>
         </LinearLayout>
