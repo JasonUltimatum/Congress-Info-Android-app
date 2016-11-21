@@ -7,11 +7,13 @@ import android.widget.ImageView;
 
 import com.squareup.picasso.Picasso;
 
+import java.io.Serializable;
+
 /**
  * Created by et on 11/20/16.
  */
 
-public class LegislatorModel {
+public class LegislatorModel implements Serializable{
     private String name;
     private String party;
     private String state;

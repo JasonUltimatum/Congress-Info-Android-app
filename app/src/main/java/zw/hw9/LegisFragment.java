@@ -99,7 +99,9 @@ public class LegisFragment extends Fragment implements TabHost.OnTabChangeListen
         @Override
         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
             Intent intent = new Intent(getActivity(),legDetailActivity.class);
-            intent.putExtra("Test","god lin wen as dog");
+            LegislatorModel lm =(LegislatorModel) adapterView.getAdapter().getItem(i);
+
+            intent.putExtra("leg",lm);
             startActivity(intent);
         }
     };
