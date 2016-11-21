@@ -82,10 +82,10 @@ public class LegisFragment extends Fragment implements TabHost.OnTabChangeListen
         mainList = (ListView)layout.findViewById(R.id.listviewstate);
         //mainList.setAdapter(new ArrayAdapter<String>(getActivity(),android.R.layout.simple_list_item_1,new ArrayList<String>()));
 
-        new MyTask().execute(stateUrl);
+        new LegTask().execute(stateUrl);
         return layout;
     }
-    class MyTask extends AsyncTask<String,String,List<LegislatorModel>>{
+    class LegTask extends AsyncTask<String,String,List<LegislatorModel>>{
         //ArrayAdapter<String> adapter;
         BufferedReader reader;
         HttpURLConnection connection;
@@ -192,13 +192,12 @@ public class LegisFragment extends Fragment implements TabHost.OnTabChangeListen
             ImageView photo;
             TextView tvName;
             TextView tvPSD;
-
             photo= (ImageView)convertView.findViewById(R.id.legphoto);
             tvName = (TextView)convertView.findViewById(R.id.legn);
             tvPSD = (TextView)convertView.findViewById(R.id.legpsd);
             //Picasso.with(context).load(legList.get(position).getPhoto()).into(photo);
             tvName.setText(legList.get(position).getName());
-            tvPSD.setText("("+legList.get(position).getParty()+")"+legList.get(position).getState()+"- District: "+legList.get(position).getDistrict());
+            tvPSD.setText("("+legList.get(position).getParty()+")"+legList.get(position).getState()+" - District: "+legList.get(position).getDistrict());
             return convertView;
         }
 
