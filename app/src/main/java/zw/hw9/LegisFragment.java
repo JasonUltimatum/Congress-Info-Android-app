@@ -89,6 +89,8 @@ public class LegisFragment extends Fragment implements TabHost.OnTabChangeListen
         houseList =(ListView)layout.findViewById(R.id.listviewhouse);
         senateList=(ListView)layout.findViewById(R.id.listviewsenate);
         mainList.setOnItemClickListener(onListClick);
+        houseList.setOnItemClickListener(onListClick);
+        senateList.setOnItemClickListener(onListClick);
         new LegTask().execute(stateUrl);
         new LegHouseTask().execute(houseUrl);
         new LegSenateTask().execute(senateUrl);
@@ -100,7 +102,6 @@ public class LegisFragment extends Fragment implements TabHost.OnTabChangeListen
         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
             Intent intent = new Intent(getActivity(),legDetailActivity.class);
             LegislatorModel lm =(LegislatorModel) adapterView.getAdapter().getItem(i);
-
             intent.putExtra("leg",lm);
             startActivity(intent);
         }
@@ -132,9 +133,8 @@ public class LegisFragment extends Fragment implements TabHost.OnTabChangeListen
                 while((line = reader.readLine())!=null){
                     buffer.append(line);
                 }
-                String finalJson= buffer.toString();
-                JSONObject parentObject = new JSONObject(finalJson);
-                JSONArray parentArray = parentObject.getJSONArray("results");
+
+                JSONArray parentArray = new JSONObject(buffer.toString()).getJSONArray("results");
 
                 for(int i=0;i<parentArray.length();i++){
                     LegislatorModel lModel = new LegislatorModel();
@@ -360,7 +360,6 @@ public class LegisFragment extends Fragment implements TabHost.OnTabChangeListen
         }
 
     }
-
     class LegislatorAdapter extends ArrayAdapter{
         private List<LegislatorModel> legList;
         private int resource;

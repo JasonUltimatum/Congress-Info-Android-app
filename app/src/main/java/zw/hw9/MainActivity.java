@@ -1,5 +1,6 @@
 package zw.hw9;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -107,7 +108,8 @@ public class MainActivity extends AppCompatActivity
             FragmentManager favManager = getSupportFragmentManager();
             favManager. beginTransaction().replace(R.id.content_main,favFragment,favFragment.getTag()).commit();
         } else if (id == R.id.nav_share) {
-
+            Intent intent = new Intent(MainActivity.this,aboutme.class);
+            startActivity(intent);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

@@ -11,22 +11,24 @@
         android:layout_height="match_parent">
 
         <ImageView
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:layout_width="match_parent"
             android:src="@mipmap/ic_launcher"
-            android:id="@+id/legphoto" />
+            android:id="@+id/legphoto"
+            android:layout_height="40dp" />
 
     </FrameLayout>
 
     <LinearLayout
         android:orientation="vertical"
-        android:layout_width="300dp"
+        android:layout_width="293dp"
         android:layout_height="40dp">
 
         <TextView
             android:text="TextView"
             android:layout_width="202dp"
             android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textColor="#000000"
             android:id="@+id/legn" />
 
         <TextView
@@ -43,9 +45,9 @@
 
         <ImageView
             android:layout_width="match_parent"
-            android:layout_height="52dp"
             android:src="@drawable/forward"
-            android:id="@+id/legforward" />
+            android:id="@+id/legforward"
+            android:layout_height="40dp" />
     </FrameLayout>
 
 </LinearLayout>
