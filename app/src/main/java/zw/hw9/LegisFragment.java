@@ -361,7 +361,7 @@ public class LegisFragment extends Fragment implements TabHost.OnTabChangeListen
 
     }
     class LegislatorAdapter extends ArrayAdapter{
-        private List<LegislatorModel> legList;
+               private List<LegislatorModel> legList;
         private int resource;
         private LayoutInflater inflater;
         private Context context;

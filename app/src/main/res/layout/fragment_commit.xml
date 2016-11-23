@@ -46,6 +46,10 @@
                     android:layout_height="455dp"
                     android:orientation="vertical">
 
+                    <ListView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:id="@+id/lvhouse" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -54,6 +58,11 @@
                     android:layout_height="match_parent"
                     android:orientation="vertical">
 
+                    <ListView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:id="@+id/lvsenate" />
+
                 </LinearLayout>
 
                 <LinearLayout
@@ -61,6 +70,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical">
+
+                    <ListView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:id="@+id/lvjoint" />
 
                 </LinearLayout>
             </FrameLayout>
