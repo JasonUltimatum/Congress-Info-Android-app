@@ -95,19 +95,24 @@ public class MainActivity extends AppCompatActivity
             LegisFragment legisFragment = new LegisFragment();
             FragmentManager legisManager = getSupportFragmentManager();
             legisManager.beginTransaction().replace(R.id.content_main, legisFragment, legisFragment.getTag()).commit();
+            setTitle("Legislators");
         } else if (id == R.id.nav_gallery) {
             BillsFragment billsFragment = new BillsFragment();
             FragmentManager billsManager =getSupportFragmentManager();
             billsManager.beginTransaction().replace(R.id.content_main,billsFragment,billsFragment.getTag()).commit();
+            setTitle("Bills");
         } else if (id == R.id.nav_slideshow) {
             CommitFragment commitFragment = new CommitFragment();
             FragmentManager commitManager = getSupportFragmentManager();
             commitManager.beginTransaction().replace(R.id.content_main,commitFragment,commitFragment.getTag()).commit();
+            setTitle("Committees");
         } else if (id == R.id.nav_manage) {
             FavFragment favFragment = new FavFragment();
             FragmentManager favManager = getSupportFragmentManager();
             favManager. beginTransaction().replace(R.id.content_main,favFragment,favFragment.getTag()).commit();
+            setTitle("Favorites");
         } else if (id == R.id.nav_share) {
+
             Intent intent = new Intent(MainActivity.this,aboutme.class);
             startActivity(intent);
         }

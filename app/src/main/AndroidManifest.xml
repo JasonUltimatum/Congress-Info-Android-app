@@ -22,7 +22,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".legDetailActivity" />
-        <activity android:name=".aboutme"></activity>
+        <activity android:name=".aboutme" />
+        <activity android:name=".billDetailActivity"></activity>
     </application>
 
 </manifest>

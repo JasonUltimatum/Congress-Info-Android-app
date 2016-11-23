@@ -91,6 +91,7 @@ public class LegisFragment extends Fragment implements TabHost.OnTabChangeListen
         mainList.setOnItemClickListener(onListClick);
         houseList.setOnItemClickListener(onListClick);
         senateList.setOnItemClickListener(onListClick);
+
         new LegTask().execute(stateUrl);
         new LegHouseTask().execute(houseUrl);
         new LegSenateTask().execute(senateUrl);
@@ -100,6 +101,7 @@ public class LegisFragment extends Fragment implements TabHost.OnTabChangeListen
 
         @Override
         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
             Intent intent = new Intent(getActivity(),legDetailActivity.class);
             LegislatorModel lm =(LegislatorModel) adapterView.getAdapter().getItem(i);
             intent.putExtra("leg",lm);
@@ -107,20 +109,18 @@ public class LegisFragment extends Fragment implements TabHost.OnTabChangeListen
         }
     };
     class LegTask extends AsyncTask<String,String,List<LegislatorModel>>{
-        //ArrayAdapter<String> adapter;
+
         BufferedReader reader;
         HttpURLConnection connection;
         @Override
         protected void onPreExecute() {
-            //adapter =(ArrayAdapter<String>)mainList.getAdapter();
+
         }
 
         @Override
         protected List<LegislatorModel> doInBackground(String... urls) {
             List<LegislatorModel> lModelList = new ArrayList<>();
-            for(String item:texts){
-                //publishProgress(item);
-            }
+
             try {
                 URL url = new URL(urls[0]);
 

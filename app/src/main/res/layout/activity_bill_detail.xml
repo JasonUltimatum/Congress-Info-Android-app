@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent">
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_leg_detail"
+    android:id="@+id/activity_bill_detail"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingBottom="@dimen/activity_vertical_margin"
@@ -14,102 +13,27 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:background="#f9f9f9"
-    tools:context="zw.hw9.legDetailActivity"
-    android:orientation="horizontal">
-
-    <!--<TextView-->
-        <!--android:text="TextView"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_marginLeft="146dp"-->
-        <!--android:layout_marginStart="146dp"-->
-        <!--android:id="@+id/detailtest"-->
-        <!--android:layout_alignParentTop="true"-->
-        <!--android:layout_alignParentLeft="true"-->
-        <!--android:layout_alignParentStart="true" />-->
-
-
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/lists">
-
-
-
-        <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_gravity="right"
-            app:srcCompat="@drawable/w"
-            android:id="@+id/imageView6" />
-
-        <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            app:srcCompat="@drawable/t"
-            android:layout_gravity="right"
-            android:layout_marginRight="50dp"
-            android:layout_marginEnd="50dp"
-            android:id="@+id/imageView5" />
-
-        <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_gravity="right"
-            android:layout_marginRight="150dp"
-            android:layout_marginEnd="150dp"
-            app:srcCompat="@drawable/fav"
-            android:id="@+id/imageView2"
-            android:adjustViewBounds="false"
-            android:cropToPadding="false" />
-
-        <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            app:srcCompat="@drawable/f"
-            android:layout_gravity="right"
-            android:layout_marginRight="100dp"
-            android:layout_marginEnd="100dp"
-            android:id="@+id/imageView4" />
-    </FrameLayout>
-
-    <ImageView
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        app:srcCompat="@mipmap/ic_launcher"
-        android:layout_below="@+id/lists"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="30dp"
-        android:id="@+id/dephoto" />
+    tools:context="zw.hw9.billDetailActivity">
 
     <ImageView
         android:layout_width="30dp"
         android:layout_height="30dp"
-        app:srcCompat="@drawable/d"
-        android:layout_below="@+id/dephoto"
-        android:layout_alignRight="@+id/dephoto"
-        android:layout_alignEnd="@+id/dephoto"
-        android:layout_marginRight="42dp"
-        android:layout_marginEnd="42dp"
-        android:id="@+id/imgparty" />
-
-    <TextView
-        android:text="Republican"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/dephoto"
-        android:layout_alignLeft="@+id/dephoto"
-        android:layout_alignStart="@+id/dephoto"
-        android:layout_marginLeft="36dp"
-        android:layout_marginStart="36dp"
-        android:id="@+id/departy" />
+        app:srcCompat="@drawable/fav"
+        android:id="@+id/imageView7"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginTop="12dp" />
 
     <TableLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/imgparty"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="18dp">
+        android:layout_below="@+id/imageView7"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="13dp">
 
         <TableRow
             android:layout_width="match_parent"
@@ -118,7 +42,7 @@
             android:layout_marginBottom="15dp">
 
             <TextView
-                android:text="Name: "
+                android:text="Bill ID:"
                 android:textStyle="bold"
                 android:textColor="#000000"
                 android:layout_weight="1"
@@ -133,24 +57,24 @@
                 android:layout_weight="1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/dename"
+                android:id="@+id/bdeid"
                 android:textAlignment="viewEnd"
                 android:layout_gravity="end" />
         </TableRow>
-
         <TableRow
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="15dp"
             android:layout_marginBottom="15dp">
+
             <TextView
-                android:text="Email:"
+                android:text="Title: "
                 android:textStyle="bold"
                 android:textColor="#000000"
                 android:layout_weight="1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/textView9"
+                android:id="@+id/textView"
                 android:textAlignment="viewStart"
                 android:layout_gravity="start" />
 
@@ -159,24 +83,24 @@
                 android:layout_weight="1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/deemail"
+                android:id="@+id/bdetitle"
                 android:textAlignment="viewEnd"
                 android:layout_gravity="end" />
         </TableRow>
-
         <TableRow
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="15dp"
             android:layout_marginBottom="15dp">
+
             <TextView
-                android:text="Chamber:"
+                android:text="Bill Type:"
                 android:textStyle="bold"
                 android:textColor="#000000"
                 android:layout_weight="1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/textView12"
+                android:id="@+id/textView7"
                 android:textAlignment="viewStart"
                 android:layout_gravity="start" />
 
@@ -185,24 +109,23 @@
                 android:layout_weight="1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/dechamber"
+                android:id="@+id/bdetype"
                 android:textAlignment="viewEnd"
                 android:layout_gravity="end" />
         </TableRow>
-
         <TableRow
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="15dp"
             android:layout_marginBottom="15dp">
+
             <TextView
-                android:text="Contact:"
+                android:text="Sponsor: "
                 android:textStyle="bold"
                 android:textColor="#000000"
                 android:layout_weight="1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/textView15"
                 android:textAlignment="viewStart"
                 android:layout_gravity="start" />
 
@@ -211,7 +134,7 @@
                 android:layout_weight="1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/decontact"
+                android:id="@+id/bdesponsor"
                 android:textAlignment="viewEnd"
                 android:layout_gravity="end" />
         </TableRow>
@@ -220,14 +143,14 @@
             android:layout_height="match_parent"
             android:layout_marginTop="15dp"
             android:layout_marginBottom="15dp">
+
             <TextView
-                android:text="Start Term:"
+                android:text="Chamber "
                 android:textStyle="bold"
                 android:textColor="#000000"
                 android:layout_weight="1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/textView16"
                 android:textAlignment="viewStart"
                 android:layout_gravity="start" />
 
@@ -236,7 +159,7 @@
                 android:layout_weight="1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/destart"
+                android:id="@+id/bdechamber"
                 android:textAlignment="viewEnd"
                 android:layout_gravity="end" />
         </TableRow>
@@ -245,14 +168,14 @@
             android:layout_height="match_parent"
             android:layout_marginTop="15dp"
             android:layout_marginBottom="15dp">
+
             <TextView
-                android:text="End Term:"
+                android:text="Status: "
                 android:textStyle="bold"
                 android:textColor="#000000"
                 android:layout_weight="1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/textView17"
                 android:textAlignment="viewStart"
                 android:layout_gravity="start" />
 
@@ -261,7 +184,7 @@
                 android:layout_weight="1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/deend"
+                android:id="@+id/bdestatus"
                 android:textAlignment="viewEnd"
                 android:layout_gravity="end" />
         </TableRow>
@@ -272,38 +195,12 @@
             android:layout_marginBottom="15dp">
 
             <TextView
-                android:text="Term"
+                android:text="Introduced On: "
                 android:textStyle="bold"
                 android:textColor="#000000"
                 android:layout_weight="1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/textView18"
-                android:textAlignment="viewStart"
-                android:layout_gravity="start" />
-
-            <ProgressBar
-                android:layout_weight="1"
-                style="?android:attr/progressBarStyleSmall"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/progressBar2"
-                android:indeterminate="false" />
-
-        </TableRow>
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="15dp"
-            android:layout_marginBottom="15dp">
-            <TextView
-                android:text="Office:"
-                android:textStyle="bold"
-                android:textColor="#000000"
-                android:layout_weight="1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/textView19"
                 android:textAlignment="viewStart"
                 android:layout_gravity="start" />
 
@@ -312,7 +209,7 @@
                 android:layout_weight="1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/deoffice"
+                android:id="@+id/bdeintro"
                 android:textAlignment="viewEnd"
                 android:layout_gravity="end" />
         </TableRow>
@@ -321,14 +218,14 @@
             android:layout_height="match_parent"
             android:layout_marginTop="15dp"
             android:layout_marginBottom="15dp">
+
             <TextView
-                android:text="State:"
+                android:text="Congress URL: "
                 android:textStyle="bold"
                 android:textColor="#000000"
                 android:layout_weight="1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/textView20"
                 android:textAlignment="viewStart"
                 android:layout_gravity="start" />
 
@@ -337,7 +234,7 @@
                 android:layout_weight="1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/destate"
+                android:id="@+id/bdecongress"
                 android:textAlignment="viewEnd"
                 android:layout_gravity="end" />
         </TableRow>
@@ -346,14 +243,14 @@
             android:layout_height="match_parent"
             android:layout_marginTop="15dp"
             android:layout_marginBottom="15dp">
+
             <TextView
-                android:text="Fax :"
+                android:text="Version Status: "
                 android:textStyle="bold"
                 android:textColor="#000000"
                 android:layout_weight="1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/textView23"
                 android:textAlignment="viewStart"
                 android:layout_gravity="start" />
 
@@ -362,7 +259,7 @@
                 android:layout_weight="1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/defax"
+                android:id="@+id/bdevstatus"
                 android:textAlignment="viewEnd"
                 android:layout_gravity="end" />
         </TableRow>
@@ -371,14 +268,14 @@
             android:layout_height="match_parent"
             android:layout_marginTop="15dp"
             android:layout_marginBottom="15dp">
+
             <TextView
-                android:text="Birthday :"
+                android:text="Bill URL:"
                 android:textStyle="bold"
                 android:textColor="#000000"
                 android:layout_weight="1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/textView21"
                 android:textAlignment="viewStart"
                 android:layout_gravity="start" />
 
@@ -387,13 +284,13 @@
                 android:layout_weight="1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/debirth"
+                android:id="@+id/bdeburl"
                 android:textAlignment="viewEnd"
                 android:layout_gravity="end" />
         </TableRow>
+
+
     </TableLayout>
-
-
 
 </RelativeLayout>
 </ScrollView>
