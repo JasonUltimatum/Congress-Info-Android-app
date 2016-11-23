@@ -47,10 +47,26 @@
                     android:layout_height="455dp"
                     android:orientation="vertical">
 
-                    <ListView
-                        android:id="@+id/listviewstate"
-                        android:layout_width="334dp"
-                        android:layout_height="wrap_content" />
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        tools:ignore="UselessParent">
+
+                        <LinearLayout
+                            android:orientation="vertical"
+                            android:layout_height="match_parent"
+                            android:background="#c3c3c3"
+                            android:layout_gravity="end"
+                            android:id="@+id/stateside"
+                            android:layout_width="30dp">
+
+                        </LinearLayout>
+
+                        <ListView
+                            android:id="@+id/listviewstate"
+                            android:layout_height="wrap_content"
+                            android:layout_width="300dp" />
+                    </FrameLayout>
 
 
                 </LinearLayout>
@@ -58,27 +74,61 @@
                 <LinearLayout
                     android:id="@+id/tab2"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="455dp"
                     android:orientation="vertical">
 
-                    <ListView
-                        android:layout_width="334dp"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/listviewhouse" />
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        tools:ignore="UselessParent">
+
+                        <LinearLayout
+                            android:orientation="vertical"
+                            android:layout_height="match_parent"
+                            android:background="#c3c3c3"
+                            android:layout_gravity="end"
+                            android:id="@+id/houseside"
+                            android:layout_width="30dp">
+
+                        </LinearLayout>
+
+                        <ListView
+                            android:id="@+id/listviewhouse"
+                            android:layout_height="wrap_content"
+                            android:layout_width="300dp" />
+                    </FrameLayout>
                 </LinearLayout>
 
                 <LinearLayout
                     android:id="@+id/tab3"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="455dp"
                     android:orientation="vertical">
 
-                    <ListView
-                        android:layout_width="334dp"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/listviewsenate" />
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        tools:ignore="UselessParent">
+
+                        <LinearLayout
+                            android:orientation="vertical"
+                            android:layout_height="match_parent"
+                            android:background="#c3c3c3"
+                            android:layout_gravity="end"
+                            android:id="@+id/senateside"
+                            android:layout_width="30dp">
+
+                        </LinearLayout>
+
+                        <ListView
+                            android:id="@+id/listviewsenate"
+                            android:layout_height="wrap_content"
+                            android:layout_width="300dp" />
+                    </FrameLayout>
                 </LinearLayout>
             </FrameLayout>
+
         </LinearLayout>
     </TabHost>
+
 </RelativeLayout>

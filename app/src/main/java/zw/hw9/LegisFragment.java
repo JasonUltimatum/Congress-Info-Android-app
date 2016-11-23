@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TabHost;
@@ -36,7 +37,11 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.PriorityQueue;
 
 import zw.hw9.zw.hw9.models.LegislatorModel;
 
@@ -44,7 +49,7 @@ import zw.hw9.zw.hw9.models.LegislatorModel;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class LegisFragment extends Fragment implements TabHost.OnTabChangeListener {
+public class LegisFragment extends Fragment implements TabHost.OnTabChangeListener,View.OnClickListener {
     private RelativeLayout layout;
     private String[] stateUrl = {"http://104.198.0.197:8080/legislators?apikey=74b463c521c84ca5b7dd3d30ac0417f5&per_page=all"};
     private String[] houseUrl = {"http://104.198.0.197:8080/legislators?chamber=house&apikey=74b463c521c84ca5b7dd3d30ac0417f5&per_page=all"};
@@ -53,6 +58,9 @@ public class LegisFragment extends Fragment implements TabHost.OnTabChangeListen
     ListView houseList;
     ListView senateList;
     private String[] texts ={"I","KNOW","YOU","SOME","WHERE","OUT","THERE"};
+    Map<String,Integer> map;
+    Map<String,Integer> houseMap;
+    Map<String,Integer> senateMap;
     public LegisFragment() {
         // Required empty public constructor
     }
@@ -97,6 +105,51 @@ public class LegisFragment extends Fragment implements TabHost.OnTabChangeListen
         new LegSenateTask().execute(senateUrl);
         return layout;
     }
+    private void getIndex(List<LegislatorModel> list){
+        map = new LinkedHashMap<>();
+        for(int i =0;i<list.size();i++){
+            LegislatorModel temp = list.get(i);
+            String index = temp.getState().substring(0,1).toUpperCase();
+            if(map.get(index)==null) {
+                map.put(index, i);
+            }
+        }
+    }
+    private void getNameIndex(List<LegislatorModel> list){
+        map = new LinkedHashMap<>();
+        for(int i =0;i<list.size();i++){
+            LegislatorModel temp = list.get(i);
+            String index = temp.getName().substring(0,1).toUpperCase();
+            if(map.get(index)==null) {
+                map.put(index, i);
+            }
+        }
+    }
+
+
+    private void displayIndex(LinearLayout sideLayout){
+
+        TextView tv;
+        List<String> sideIndex = new ArrayList<>(map.keySet());
+        for(String index: sideIndex){
+            tv = (TextView) getActivity().getLayoutInflater().inflate(R.layout.side_index_item,null);
+            tv.setText(index);
+            tv.setOnClickListener(this);
+            sideLayout.addView(tv);
+        }
+    }
+    public void onClick(View view){
+        TextView selected = (TextView)view;
+
+            mainList.setSelection(map.get(selected.getText()));
+
+//        if(houseMap.size()!=0) {
+//            houseList.setSelection(houseMap.get(selected.getText()));
+//        }
+//        if(senateMap.size()!=0) {
+//            houseList.setSelection(senateMap.get(selected.getText()));
+//        }
+    }
     private AdapterView.OnItemClickListener onListClick = new AdapterView.OnItemClickListener(){
 
         @Override
@@ -120,7 +173,6 @@ public class LegisFragment extends Fragment implements TabHost.OnTabChangeListen
         @Override
         protected List<LegislatorModel> doInBackground(String... urls) {
             List<LegislatorModel> lModelList = new ArrayList<>();
-
             try {
                 URL url = new URL(urls[0]);
 
@@ -185,7 +237,16 @@ public class LegisFragment extends Fragment implements TabHost.OnTabChangeListen
         protected void onPostExecute(List<LegislatorModel> result) {
             //TODO need to set data to the list
             LegislatorAdapter adapter = new LegislatorAdapter(getActivity().getApplicationContext(),R.layout.legrow,result);
+            adapter.sort(new Comparator<LegislatorModel>() {
+                @Override
+                public int compare(LegislatorModel l1, LegislatorModel l2) {
+                    return l1.getState().compareTo(l2.getState());
+                }
+            });
             mainList.setAdapter(adapter);
+            getIndex(result);
+            LinearLayout sideLayout = (LinearLayout)getActivity().findViewById(R.id.stateside);
+            displayIndex(sideLayout);
 
         }
 
@@ -270,7 +331,19 @@ public class LegisFragment extends Fragment implements TabHost.OnTabChangeListen
         protected void onPostExecute(List<LegislatorModel> result) {
             //TODO need to set data to the list
             LegislatorAdapter adapter = new LegislatorAdapter(getActivity().getApplicationContext(),R.layout.legrow,result);
+            adapter.sort(new Comparator<LegislatorModel>() {
+                @Override
+                public int compare(LegislatorModel l1, LegislatorModel l2) {
+                    String s1 =l1.getName(), s2 = l2.getName();
+                    int i1 =s1.indexOf(','), i2 = s2.indexOf(',');
+                    return s1.substring(0,i1).compareTo(s2.substring(0,i2));
+
+                }
+            });
             houseList.setAdapter(adapter);
+            getNameIndex(result);
+            LinearLayout sideLayout = (LinearLayout)getActivity().findViewById(R.id.houseside);
+            displayIndex(sideLayout);
 
         }
 
@@ -355,8 +428,19 @@ public class LegisFragment extends Fragment implements TabHost.OnTabChangeListen
         protected void onPostExecute(List<LegislatorModel> result) {
             //TODO need to set data to the list
             LegislatorAdapter adapter = new LegislatorAdapter(getActivity().getApplicationContext(),R.layout.legrow,result);
-            senateList.setAdapter(adapter);
+            adapter.sort(new Comparator<LegislatorModel>() {
+                @Override
+                public int compare(LegislatorModel l1, LegislatorModel l2) {
+                    String s1 =l1.getName(), s2 = l2.getName();
+                    int i1 =s1.indexOf(','), i2 = s2.indexOf(',');
+                    return s1.substring(0,i1).compareTo(s2.substring(0,i2));
 
+                }
+            });
+            senateList.setAdapter(adapter);
+            getNameIndex(result);
+            LinearLayout sideLayout = (LinearLayout)getActivity().findViewById(R.id.senateside);
+            displayIndex(sideLayout);
         }
 
     }
