@@ -126,6 +126,7 @@
                             android:layout_width="300dp" />
                     </FrameLayout>
                 </LinearLayout>
+
             </FrameLayout>
 
         </LinearLayout>

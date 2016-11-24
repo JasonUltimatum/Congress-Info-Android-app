@@ -10,7 +10,7 @@ public class BillModel implements Serializable {
     private String id;
     private String titile;
     private String intro;
-
+    private String
 
     public String getId() {
         return id;

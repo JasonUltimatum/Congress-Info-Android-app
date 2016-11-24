@@ -57,6 +57,7 @@ public class LegisFragment extends Fragment implements TabHost.OnTabChangeListen
     ListView mainList;
     ListView houseList;
     ListView senateList;
+    TabHost tbHost;
     private String[] texts ={"I","KNOW","YOU","SOME","WHERE","OUT","THERE"};
     Map<String,Integer> map;
     Map<String,Integer> houseMap;
@@ -71,7 +72,7 @@ public class LegisFragment extends Fragment implements TabHost.OnTabChangeListen
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         layout=(RelativeLayout) inflater.inflate(R.layout.fragment_legis,container,false);
-         TabHost tbHost =(TabHost)layout.findViewById(R.id.tabHost);
+         tbHost =(TabHost)layout.findViewById(R.id.tabHost);
         tbHost.setup();
 
         TabHost.TabSpec spec = tbHost.newTabSpec("Tab One");
@@ -105,7 +106,7 @@ public class LegisFragment extends Fragment implements TabHost.OnTabChangeListen
         new LegSenateTask().execute(senateUrl);
         return layout;
     }
-    private void getIndex(List<LegislatorModel> list){
+       private void getIndex(List<LegislatorModel> list){
         map = new LinkedHashMap<>();
         for(int i =0;i<list.size();i++){
             LegislatorModel temp = list.get(i);
@@ -115,6 +116,7 @@ public class LegisFragment extends Fragment implements TabHost.OnTabChangeListen
             }
         }
     }
+
     private void getNameIndex(List<LegislatorModel> list){
         map = new LinkedHashMap<>();
         for(int i =0;i<list.size();i++){
@@ -125,7 +127,6 @@ public class LegisFragment extends Fragment implements TabHost.OnTabChangeListen
             }
         }
     }
-
 
     private void displayIndex(LinearLayout sideLayout){
 
@@ -140,15 +141,16 @@ public class LegisFragment extends Fragment implements TabHost.OnTabChangeListen
     }
     public void onClick(View view){
         TextView selected = (TextView)view;
-
+        if(tbHost.getCurrentTab()==0) {
             mainList.setSelection(map.get(selected.getText()));
+        }
 
-//        if(houseMap.size()!=0) {
-//            houseList.setSelection(houseMap.get(selected.getText()));
-//        }
-//        if(senateMap.size()!=0) {
-//            houseList.setSelection(senateMap.get(selected.getText()));
-//        }
+        if(tbHost.getCurrentTab()==1) {
+            houseList.setSelection(map.get(selected.getText()));
+        }
+        if(tbHost.getCurrentTab()==2) {
+            senateList.setSelection(map.get(selected.getText()));
+        }
     }
     private AdapterView.OnItemClickListener onListClick = new AdapterView.OnItemClickListener(){
 
@@ -361,9 +363,9 @@ public class LegisFragment extends Fragment implements TabHost.OnTabChangeListen
                 }
             });
             houseList.setAdapter(adapter);
-            //getNameIndex(result);
+            getNameIndex(adapter.legList);
             LinearLayout sideLayout = (LinearLayout)getActivity().findViewById(R.id.houseside);
-            //displayIndex(sideLayout);
+            displayIndex(sideLayout);
 
         }
 
@@ -469,9 +471,9 @@ public class LegisFragment extends Fragment implements TabHost.OnTabChangeListen
                 }
             });
             senateList.setAdapter(adapter);
-            //getNameIndex(result);
+            getNameIndex(adapter.legList);
             LinearLayout sideLayout = (LinearLayout)getActivity().findViewById(R.id.senateside);
-            //displayIndex(sideLayout);
+            displayIndex(sideLayout);
         }
 
     }
