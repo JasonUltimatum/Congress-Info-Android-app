@@ -37,6 +37,8 @@
 
 
         <ImageView
+            android:scaleType="fitCenter"
+            android:adjustViewBounds="true"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_gravity="right"
@@ -44,6 +46,8 @@
             android:id="@+id/imageView6" />
 
         <ImageView
+            android:scaleType="fitCenter"
+            android:adjustViewBounds="true"
             android:layout_width="30dp"
             android:layout_height="30dp"
             app:srcCompat="@drawable/t"
@@ -64,6 +68,8 @@
             android:cropToPadding="false" />
 
         <ImageView
+            android:scaleType="fitCenter"
+            android:adjustViewBounds="true"
             android:layout_width="30dp"
             android:layout_height="30dp"
             app:srcCompat="@drawable/f"

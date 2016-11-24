@@ -191,18 +191,28 @@ public class LegisFragment extends Fragment implements TabHost.OnTabChangeListen
                 for(int i=0;i<parentArray.length();i++){
                     LegislatorModel lModel = new LegislatorModel();
 
-                    JSONObject finalObject = parentArray.getJSONObject(i);
-                    String party = finalObject.getString("party");
-                    String bioguide_id = finalObject.getString("bioguide_id");
-                    String name = finalObject.getString("last_name")+", "+finalObject.getString("first_name");
-                    String district = finalObject.getString("district");
-                    String state = finalObject.getString("state_name");
+                    JSONObject results = parentArray.getJSONObject(i);
+                    String party = results.getString("party");
+                    String bioguide_id = results.getString("bioguide_id");
+                    String name = results.getString("last_name")+", "+results.getString("first_name");
+                    String district = results.getString("district");
+                    String state = results.getString("state_name");
                     lModel.setBioguide_id(bioguide_id);
                     lModel.setDistrict(district);
                     lModel.setParty(party);
                     lModel.setName(name);
                     lModel.setState(state);
-
+                    lModel.setFullname(results.getString("title")+". "+name);
+                    String email =results.getString("oc_email");
+                    lModel.setChamber(results.getString("chamber"));
+                    lModel.setEmail(email ==null?"N.A.":email);
+                    lModel.setContact(results.getString("phone"));
+                    lModel.setStartTerm(results.getString("term_start"));
+                    lModel.setEndTerm(results.getString("term_end"));
+                    lModel.setOffice(results.getString("office"));
+                    lModel.setSt(results.getString("state"));
+                    lModel.setFax(results.getString("fax")==null?"N.A.":results.getString("fax"));
+                    lModel.setBirth(results.getString("birthday"));
                     lModelList.add(lModel);
                 }
                 //publishProgress(buffer.toString());
@@ -285,18 +295,28 @@ public class LegisFragment extends Fragment implements TabHost.OnTabChangeListen
                 for(int i=0;i<parentArray.length();i++){
                     LegislatorModel lModel = new LegislatorModel();
 
-                    JSONObject finalObject = parentArray.getJSONObject(i);
-                    String party = finalObject.getString("party");
-                    String bioguide_id = finalObject.getString("bioguide_id");
-                    String name = finalObject.getString("last_name")+", "+finalObject.getString("first_name");
-                    String district = finalObject.getString("district");
-                    String state = finalObject.getString("state_name");
+                    JSONObject results = parentArray.getJSONObject(i);
+                    String party = results.getString("party");
+                    String bioguide_id = results.getString("bioguide_id");
+                    String name = results.getString("last_name")+", "+results.getString("first_name");
+                    String district = results.getString("district");
+                    String state = results.getString("state_name");
                     lModel.setBioguide_id(bioguide_id);
                     lModel.setDistrict(district);
                     lModel.setParty(party);
                     lModel.setName(name);
                     lModel.setState(state);
+                    lModel.setFullname(results.getString("title")+". "+name);
+                    String email =results.getString("oc_email");
 
+                    lModel.setEmail(email ==null?"N.A.":email);
+                    lModel.setContact(results.getString("phone"));
+                    lModel.setStartTerm(results.getString("term_start"));
+                    lModel.setEndTerm(results.getString("term_end"));
+                    lModel.setOffice(results.getString("office"));
+                    lModel.setSt(results.getString("state"));
+                    lModel.setFax(results.getString("fax")==null?"N.A.":results.getString("fax"));
+                    lModel.setBirth(results.getString("birthday"));
                     lModelList.add(lModel);
                 }
                 //publishProgress(buffer.toString());
@@ -341,9 +361,9 @@ public class LegisFragment extends Fragment implements TabHost.OnTabChangeListen
                 }
             });
             houseList.setAdapter(adapter);
-            getNameIndex(result);
+            //getNameIndex(result);
             LinearLayout sideLayout = (LinearLayout)getActivity().findViewById(R.id.houseside);
-            displayIndex(sideLayout);
+            //displayIndex(sideLayout);
 
         }
 
@@ -382,19 +402,30 @@ public class LegisFragment extends Fragment implements TabHost.OnTabChangeListen
                 for(int i=0;i<parentArray.length();i++){
                     LegislatorModel lModel = new LegislatorModel();
 
-                    JSONObject finalObject = parentArray.getJSONObject(i);
-                    String party = finalObject.getString("party");
-                    String bioguide_id = finalObject.getString("bioguide_id");
-                    String name = finalObject.getString("last_name")+", "+finalObject.getString("first_name");
-                    String district = finalObject.getString("district");
-                    String state = finalObject.getString("state_name");
+                    JSONObject results = parentArray.getJSONObject(i);
+                    String party = results.getString("party");
+                    String bioguide_id = results.getString("bioguide_id");
+                    String name = results.getString("last_name")+", "+results.getString("first_name");
+                    String district = results.getString("district");
+                    String state = results.getString("state_name");
                     lModel.setBioguide_id(bioguide_id);
                     lModel.setDistrict(district);
                     lModel.setParty(party);
                     lModel.setName(name);
                     lModel.setState(state);
+                    lModel.setFullname(results.getString("title")+". "+name);
+                    String email =results.getString("oc_email");
 
+                    lModel.setEmail(email ==null?"N.A.":email);
+                    lModel.setContact(results.getString("phone"));
+                    lModel.setStartTerm(results.getString("term_start"));
+                    lModel.setEndTerm(results.getString("term_end"));
+                    lModel.setOffice(results.getString("office"));
+                    lModel.setSt(results.getString("state"));
+                    lModel.setFax(results.getString("fax")==null?"N.A.":results.getString("fax"));
+                    lModel.setBirth(results.getString("birthday"));
                     lModelList.add(lModel);
+
                 }
                 //publishProgress(buffer.toString());
 
@@ -438,9 +469,9 @@ public class LegisFragment extends Fragment implements TabHost.OnTabChangeListen
                 }
             });
             senateList.setAdapter(adapter);
-            getNameIndex(result);
+            //getNameIndex(result);
             LinearLayout sideLayout = (LinearLayout)getActivity().findViewById(R.id.senateside);
-            displayIndex(sideLayout);
+            //displayIndex(sideLayout);
         }
 
     }
@@ -470,7 +501,7 @@ public class LegisFragment extends Fragment implements TabHost.OnTabChangeListen
             photo= (ImageView)convertView.findViewById(R.id.legphoto);
             tvName = (TextView)convertView.findViewById(R.id.legn);
             tvPSD = (TextView)convertView.findViewById(R.id.legpsd);
-            //Picasso.with(context).load(legList.get(position).getPhoto()).into(photo);
+            Picasso.with(context).load(legList.get(position).getPhoto()).resize(67,82).into(photo);
 
             tvName.setText(legList.get(position).getName());
             tvPSD.setText("("+legList.get(position).getParty()+")"+legList.get(position).getState()+" - District: "+legList.get(position).getDistrict());

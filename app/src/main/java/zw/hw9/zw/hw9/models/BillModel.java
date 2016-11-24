@@ -11,6 +11,7 @@ public class BillModel implements Serializable {
     private String titile;
     private String intro;
 
+
     public String getId() {
         return id;
     }
