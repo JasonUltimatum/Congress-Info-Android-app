@@ -117,6 +117,29 @@ public class BillsFragment extends Fragment implements TabHost.OnTabChangeListen
                     bm.setId(bill.getString("bill_id"));
                     bm.setIntro(bill.getString("introduced_on"));
                     bm.setTitile(bill.getString("official_title"));
+                    bm.setType(bill.getString("bill_type"));
+                    JSONObject sponsor= bill.getJSONObject("sponsor");
+                    String spons = sponsor.getString("title")+". "+sponsor.getString("last_name")+sponsor.getString("first_name");
+                    bm.setSponsor(spons);
+                    bm.setChamber(bill.getString("chamber"));
+                    bm.setStatus("Active");
+                    JSONObject urls= bill.getJSONObject("urls");
+                    bm.setCurl(urls.getString("congress"));
+                    if(bill.has("last_version")&&!bill.isNull("last_version")) {
+                        JSONObject lastVersion = bill.getJSONObject("last_version");
+                        bm.setVstatus(lastVersion.getString("version_name"));
+                        if(lastVersion.has("urls")&&!bill.isNull("urls")) {
+                            JSONObject pdf = lastVersion.getJSONObject("urls");
+                            bm.setBurl(pdf.getString("pdf"));
+                        }else{
+                            bm.setBurl("N.A.");
+                        }
+                    }else{
+                        bm.setVstatus("N.A.");
+                        bm.setBurl("N.A.");
+                    }
+
+
                     bmList.add(bm);
                 }
             } catch (IOException e) {
@@ -170,6 +193,28 @@ public class BillsFragment extends Fragment implements TabHost.OnTabChangeListen
                     bm.setId(bill.getString("bill_id"));
                     bm.setIntro(bill.getString("introduced_on"));
                     bm.setTitile(bill.getString("official_title"));
+                    bm.setType(bill.getString("bill_type"));
+                    JSONObject sponsor= bill.getJSONObject("sponsor");
+                    String spons = sponsor.getString("title")+". "+sponsor.getString("last_name")+sponsor.getString("first_name");
+                    bm.setSponsor(spons);
+                    bm.setChamber(bill.getString("chamber"));
+                    bm.setStatus("New");
+                    JSONObject urls= bill.getJSONObject("urls");
+                    bm.setCurl(urls.getString("congress"));
+                    if(bill.has("last_version")&&!bill.isNull("last_version")) {
+                        JSONObject lastVersion = bill.getJSONObject("last_version");
+                        bm.setVstatus(lastVersion.getString("version_name"));
+                        if(lastVersion.has("urls")&&!bill.isNull("urls")) {
+                            JSONObject pdf = lastVersion.getJSONObject("urls");
+                            bm.setBurl(pdf.getString("pdf"));
+                        }else{
+                            bm.setBurl("N.A.");
+                        }
+                    }else{
+                        bm.setVstatus("N.A.");
+                        bm.setBurl("N.A.");
+                    }
+
                     bmList.add(bm);
                 }
             } catch (IOException e) {

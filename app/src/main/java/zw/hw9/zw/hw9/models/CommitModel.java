@@ -10,6 +10,33 @@ public class CommitModel implements Serializable {
     private String id;
     private String name;
     private String chamber;
+    private String parent;
+    private String contact;
+    private String office;
+
+    public String getParent() {
+        return parent;
+    }
+
+    public void setParent(String parent) {
+        this.parent = parent;
+    }
+
+    public String getContact() {
+        return contact;
+    }
+
+    public void setContact(String contact) {
+        this.contact = contact;
+    }
+
+    public String getOffice() {
+        return office;
+    }
+
+    public void setOffice(String office) {
+        this.office = office;
+    }
 
     public String getId() {
         return id;

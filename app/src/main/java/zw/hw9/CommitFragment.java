@@ -131,6 +131,21 @@ public class CommitFragment extends Fragment implements TabHost.OnTabChangeListe
                     cm.setId(commit.getString("committee_id"));
                     cm.setChamber(commit.getString("chamber"));
                     cm.setName(commit.getString("name"));
+                    if(commit.has("parent_committee_id")&&!commit.isNull("parent_committee_id")) {
+                        cm.setParent(commit.getString("parent_committee_id"));
+                    }else{
+                        cm.setParent("N.A.");
+                    }
+                    if(commit.has("office")&&!commit.isNull("office")) {
+                        cm.setOffice(commit.getString("office"));
+                    }else{
+                        cm.setOffice("N.A.");
+                    }
+                    if(commit.has("contact")&&!commit.isNull("contact")) {
+                        cm.setContact(commit.getString("contact"));
+                    }else{
+                        cm.setContact("N.A.");
+                    }
                     cModelList.add(cm);
 
                 }
@@ -189,6 +204,21 @@ public class CommitFragment extends Fragment implements TabHost.OnTabChangeListe
                     cm.setId(commit.getString("committee_id"));
                     cm.setChamber(commit.getString("chamber"));
                     cm.setName(commit.getString("name"));
+                    if(commit.has("parent_committee_id")&&!commit.isNull("parent_committee_id")) {
+                        cm.setParent(commit.getString("parent_committee_id"));
+                    }else{
+                        cm.setParent("N.A.");
+                    }
+                    if(commit.has("office")&&!commit.isNull("office")) {
+                        cm.setOffice(commit.getString("office"));
+                    }else{
+                        cm.setOffice("N.A.");
+                    }
+                    if(commit.has("contact")&&!commit.isNull("contact")) {
+                        cm.setContact(commit.getString("contact"));
+                    }else{
+                        cm.setContact("N.A.");
+                    }
                     cModelList.add(cm);
 
                 }
@@ -247,6 +277,21 @@ public class CommitFragment extends Fragment implements TabHost.OnTabChangeListe
                     cm.setId(commit.getString("committee_id"));
                     cm.setChamber(commit.getString("chamber"));
                     cm.setName(commit.getString("name"));
+                    if(commit.has("parent_committee_id")&&!commit.isNull("parent_committee_id")) {
+                        cm.setParent(commit.getString("parent_committee_id"));
+                    }else{
+                        cm.setParent("N.A.");
+                    }
+                    if(commit.has("office")&&!commit.isNull("office")) {
+                        cm.setOffice(commit.getString("office"));
+                    }else{
+                        cm.setOffice("N.A.");
+                    }
+                    if(commit.has("contact")&&!commit.isNull("contact")) {
+                        cm.setContact(commit.getString("contact"));
+                    }else{
+                        cm.setContact("N.A.");
+                    }
                     cModelList.add(cm);
 
                 }
