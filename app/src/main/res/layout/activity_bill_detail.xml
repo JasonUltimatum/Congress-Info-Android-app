@@ -15,11 +15,10 @@
     android:background="#f9f9f9"
     tools:context="zw.hw9.billDetailActivity">
 
-    <ImageView
+    <ImageButton
         android:layout_width="30dp"
         android:layout_height="30dp"
-        app:srcCompat="@drawable/fav"
-        android:id="@+id/imageView7"
+        android:id="@+id/favBill"
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
@@ -30,7 +29,7 @@
     <TableLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/imageView7"
+        android:layout_below="@+id/favBill"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:layout_marginTop="13dp"

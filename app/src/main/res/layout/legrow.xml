@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/rowstyle"
     android:padding="4dp"
     android:weightSum="1">
 
@@ -11,45 +12,49 @@
         android:layout_height="match_parent">
 
         <ImageView
-            android:layout_width="40dp"
-            android:src="@mipmap/ic_launcher"
             android:id="@+id/legphoto"
-            android:layout_height="40dp" />
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="10dp"
+            android:src="@mipmap/ic_launcher" />
 
     </FrameLayout>
 
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="293dp"
-        android:layout_height="40dp">
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:orientation="vertical">
+
+
+        <TextView
+            android:id="@+id/legn"
+            android:layout_width="202dp"
+            android:layout_height="wrap_content"
+            android:text="TextView"
+            android:textColor="#000000"
+            android:textStyle="bold" />
 
         <FrameLayout
             android:layout_width="300dp"
             android:layout_height="wrap_content">
 
-            <TextView
-                android:text="TextView"
-                android:layout_width="202dp"
-                android:layout_height="wrap_content"
-                android:textStyle="bold"
-                android:textColor="#000000"
-                android:id="@+id/legn" />
-
             <ImageView
-                android:layout_width="20dp"
-                android:layout_gravity="center"
-                android:layout_marginLeft="60dp"
-                android:layout_marginStart="60dp"
-                android:src="@drawable/forward"
                 android:id="@+id/legforward"
-                android:layout_height="20dp" />
-        </FrameLayout>
+                android:layout_gravity="center"
+                android:layout_marginLeft="100dp"
+                android:layout_marginStart="100dp"
+                android:paddingBottom="5dp"
+                android:src="@drawable/forward"
+                android:layout_width="25dp"
+                android:layout_height="25dp" />
 
-        <TextView
-            android:text="TextView"
-            android:layout_width="204dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/legpsd" />
+            <TextView
+                android:id="@+id/legpsd"
+                android:layout_width="204dp"
+                android:layout_height="wrap_content"
+                android:text="TextView" />
+        </FrameLayout>
 
     </LinearLayout>
 

@@ -1,18 +1,27 @@
 package zw.hw9;
 
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
+
+import java.util.HashSet;
+import java.util.Set;
 
 import zw.hw9.zw.hw9.models.CommitModel;
 
 public class commitDetailActivity extends AppCompatActivity {
     CommitModel cm;
-
+    SharedPreferences share;
+    Boolean favorite ;
+    ImageButton ibfav;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,6 +52,73 @@ public class commitDetailActivity extends AppCompatActivity {
             Picasso.with(getApplicationContext()).load(R.drawable.s).resize(60,60).into(ivchamber);
         }
         cm = (CommitModel) getIntent().getSerializableExtra("commit");
+
+        share = getSharedPreferences("Commit_Fav",MODE_PRIVATE);
+        ibfav = (ImageButton)findViewById(R.id.favCommit);
+
+        Set<String> check = share.getStringSet("favCommitItem",new HashSet<String>());
+        Gson gson = new Gson();
+        String str = gson.toJson(cm);
+        if(check.contains(str)){
+            ibfav.setBackgroundResource(R.drawable.yellow);
+            favorite =true;
+        }else{
+            favorite = false;
+            ibfav.setBackgroundResource(R.drawable.fav);
+
+        }
+        ibfav.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(!favorite) {
+                    ibfav.setBackgroundResource(R.drawable.yellow);
+                }else{
+                    ibfav.setBackgroundResource(R.drawable.fav);
+                }
+                SharedPreferences.Editor editor=share.edit();
+                Gson gson = new Gson();
+                String billString = gson.toJson(cm);
+                if(!favorite) {
+                    MainActivity.commitFav.add(billString);
+                    favorite=true;
+                }else{
+                    MainActivity.commitFav.remove(billString);
+                    favorite=false;
+                }
+                editor.putStringSet("favCommitItem",MainActivity.commitFav);
+                editor.commit();
+            }
+        });
+//        if(!favorite) {
+//
+//            ibfav.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+//                    ibfav.setBackgroundResource(R.drawable.yellow);
+//                    SharedPreferences.Editor editor=share.edit();
+//                    Gson gson = new Gson();
+//                    String billString = gson.toJson(cm);
+//                    MainActivity.commitFav.add(billString);
+//                    editor.putStringSet("favCommitItem",MainActivity.commitFav);
+//                    editor.commit();
+//                }
+//            });
+//        }else{
+//            ibfav.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+//
+//                    ibfav.setBackgroundResource(R.drawable.fav);
+//                    SharedPreferences.Editor editor=share.edit();
+//                    Gson gson = new Gson();
+//                    String billString = gson.toJson(cm);
+//                    MainActivity.commitFav.remove(billString);
+//                    editor.putStringSet("favCommitItem",MainActivity.commitFav);
+//                    editor.commit();
+//                }
+//            });
+//        }
+
     }
 
     @Override

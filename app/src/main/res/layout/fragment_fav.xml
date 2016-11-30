@@ -45,6 +45,26 @@
                     android:layout_height="455dp"
                     android:orientation="vertical">
 
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        tools:ignore="UselessParent">
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_height="match_parent"
+                        android:background="#c3c3c3"
+                        android:layout_gravity="end"
+                        android:id="@+id/favlegside"
+                        android:layout_width="30dp">
+
+                    </LinearLayout>
+
+                    <ListView
+                        android:scrollbars="none"
+                        android:id="@+id/lvleg"
+                        android:layout_height="wrap_content"
+                        android:layout_width="330dp" />
+                    </FrameLayout>
                 </LinearLayout>
 
                 <LinearLayout
@@ -53,6 +73,10 @@
                     android:layout_height="match_parent"
                     android:orientation="vertical">
 
+                    <ListView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:id="@+id/lvbill" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -60,7 +84,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical">
-
+                    <ListView
+                        android:scrollbars="none"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:id="@+id/lvcommit" />
                 </LinearLayout>
             </FrameLayout>
         </LinearLayout>

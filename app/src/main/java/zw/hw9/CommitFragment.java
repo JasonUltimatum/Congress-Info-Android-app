@@ -1,6 +1,7 @@
 package zw.hw9;
 
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -29,6 +30,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 import zw.hw9.zw.hw9.models.BillModel;
@@ -170,7 +172,17 @@ public class CommitFragment extends Fragment implements TabHost.OnTabChangeListe
         @Override
         protected void onPostExecute(List<CommitModel> commitModels) {
             super.onPostExecute(commitModels);
-            CommitAdapter adapter = new CommitAdapter(getActivity().getApplicationContext(),R.layout.commitrow,commitModels);
+            Activity myActivity = getActivity();
+            if (myActivity==null) return;
+            CommitAdapter adapter = new CommitAdapter(myActivity.getApplicationContext(),R.layout.commitrow,commitModels);
+            adapter.sort(new Comparator<CommitModel>() {
+                @Override
+                public int compare(CommitModel l1, CommitModel l2) {
+                    String s1 = l1.getName(), s2 = l2.getName();
+                    return s1.compareTo(s2);
+
+                }
+            });
             houseList.setAdapter(adapter);
         }
     }
@@ -243,7 +255,17 @@ public class CommitFragment extends Fragment implements TabHost.OnTabChangeListe
         @Override
         protected void onPostExecute(List<CommitModel> commitModels) {
             super.onPostExecute(commitModels);
-            CommitAdapter adapter = new CommitAdapter(getActivity().getApplicationContext(),R.layout.commitrow,commitModels);
+            Activity myActivity = getActivity();
+            if (myActivity==null) return;
+            CommitAdapter adapter = new CommitAdapter(myActivity.getApplicationContext(),R.layout.commitrow,commitModels);
+            adapter.sort(new Comparator<CommitModel>() {
+                @Override
+                public int compare(CommitModel l1, CommitModel l2) {
+                    String s1 = l1.getName(), s2 = l2.getName();
+                    return s1.compareTo(s2);
+
+                }
+            });
             senateList.setAdapter(adapter);
         }
     }
@@ -316,7 +338,17 @@ public class CommitFragment extends Fragment implements TabHost.OnTabChangeListe
         @Override
         protected void onPostExecute(List<CommitModel> commitModels) {
             super.onPostExecute(commitModels);
-            CommitAdapter adapter = new CommitAdapter(getActivity().getApplicationContext(),R.layout.commitrow,commitModels);
+            Activity myActivity = getActivity();
+            if (myActivity==null) return;
+            CommitAdapter adapter = new CommitAdapter(myActivity.getApplicationContext(),R.layout.commitrow,commitModels);
+            adapter.sort(new Comparator<CommitModel>() {
+                @Override
+                public int compare(CommitModel l1, CommitModel l2) {
+                    String s1 = l1.getName(), s2 = l2.getName();
+                    return s1.compareTo(s2);
+
+                }
+            });
             jointList.setAdapter(adapter);
         }
     }

@@ -1,6 +1,7 @@
 package zw.hw9;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -17,12 +18,27 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TabHost;
 
+import java.util.HashSet;
+import java.util.Set;
+
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-
+    public static Set<String> legFav;
+    public static Set<String> billFav;
+    public static Set<String> commitFav;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        SharedPreferences sharedLeg = getSharedPreferences("Leg_Fav",MODE_PRIVATE);
+        legFav = sharedLeg.getStringSet("favLegItem",new HashSet<String>());
+
+        SharedPreferences sharedBill = getSharedPreferences("Bill_Fav",MODE_PRIVATE);
+        billFav =sharedBill.getStringSet("favBillItem",new HashSet<String>());
+
+        SharedPreferences sharedCommit = getSharedPreferences("Commit_Fav",MODE_PRIVATE);
+        commitFav = sharedCommit.getStringSet("favCommitItem",new HashSet<String>());
+
         setContentView(R.layout.activity_main);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -46,10 +62,10 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-//        LegisFragment legisFragment = new LegisFragment();
-//        FragmentManager legisManager = getSupportFragmentManager();
-//        legisManager.beginTransaction().replace(R.id.content_main, legisFragment, legisFragment.getTag()).commit();
-
+        LegisFragment legisFragment = new LegisFragment();
+        FragmentManager legisManager = getSupportFragmentManager();
+        legisManager.beginTransaction().replace(R.id.content_main, legisFragment, legisFragment.getTag()).commit();
+        setTitle("Legislators");
 
     }
 
@@ -63,12 +79,6 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
-    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -78,9 +88,7 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
+
 
         return super.onOptionsItemSelected(item);
     }
@@ -107,7 +115,7 @@ public class MainActivity extends AppCompatActivity
             commitManager.beginTransaction().replace(R.id.content_main,commitFragment,commitFragment.getTag()).commit();
             setTitle("Committees");
         } else if (id == R.id.nav_manage) {
-            FavFragment favFragment = new FavFragment();
+           FavFragment favFragment = new FavFragment();
             FragmentManager favManager = getSupportFragmentManager();
             favManager. beginTransaction().replace(R.id.content_main,favFragment,favFragment.getTag()).commit();
             setTitle("Favorites");

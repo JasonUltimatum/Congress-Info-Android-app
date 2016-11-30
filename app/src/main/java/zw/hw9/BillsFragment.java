@@ -1,6 +1,7 @@
 package zw.hw9;
 
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -30,6 +31,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 import zw.hw9.zw.hw9.models.BillModel;
@@ -39,10 +41,12 @@ import zw.hw9.zw.hw9.models.BillModel;
  * A simple {@link Fragment} subclass.
  */
 public class BillsFragment extends Fragment implements TabHost.OnTabChangeListener {
-    private String[] activeUrl ={"http://104.198.0.197:8080/bills?history.active=true&apikey=74b463c521c84ca5b7dd3d30ac0417f5&per_page=50"};
-    private String[] newUrl ={"http://104.198.0.197:8080/bills?history.active=false&apikey=74b463c521c84ca5b7dd3d30ac0417f5&per_page=50"};
+    private String[] activeUrl = {"http://104.198.0.197:8080/bills?history.active=true&apikey=74b463c521c84ca5b7dd3d30ac0417f5&per_page=50"};
+    private String[] newUrl = {"http://104.198.0.197:8080/bills?history.active=false&apikey=74b463c521c84ca5b7dd3d30ac0417f5&per_page=50"};
     ListView activeList;
     ListView newList;
+    public static BillAdapter adapter;
+
     public BillsFragment() {
         // Required empty public constructor
     }
@@ -53,8 +57,8 @@ public class BillsFragment extends Fragment implements TabHost.OnTabChangeListen
                              Bundle savedInstanceState) {
 
         // Inflate the layout for this fragment
-        RelativeLayout layout=(RelativeLayout) inflater.inflate(R.layout.fragment_bills,container,false);
-        TabHost tbHost =(TabHost)layout.findViewById(R.id.tabHostBill);
+        RelativeLayout layout = (RelativeLayout) inflater.inflate(R.layout.fragment_bills, container, false);
+        TabHost tbHost = (TabHost) layout.findViewById(R.id.tabHostBill);
         tbHost.setup();
 
         TabHost.TabSpec spec = tbHost.newTabSpec("Tab One");
@@ -70,8 +74,8 @@ public class BillsFragment extends Fragment implements TabHost.OnTabChangeListen
 
         tbHost.setCurrentTab(0);
         tbHost.setOnTabChangedListener(this);
-        activeList=(ListView)layout.findViewById(R.id.lvactive);
-        newList =(ListView)layout.findViewById(R.id.lvnew);
+        activeList = (ListView) layout.findViewById(R.id.lvactive);
+        newList = (ListView) layout.findViewById(R.id.lvnew);
         activeList.setOnItemClickListener(onListClick);
         newList.setOnItemClickListener(onListClick);
         new activeTask().execute(activeUrl);
@@ -79,20 +83,23 @@ public class BillsFragment extends Fragment implements TabHost.OnTabChangeListen
         return layout;
 
     }
-    private AdapterView.OnItemClickListener onListClick = new AdapterView.OnItemClickListener(){
+
+    private AdapterView.OnItemClickListener onListClick = new AdapterView.OnItemClickListener() {
 
         @Override
         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
-            Intent intent = new Intent(getActivity(),billDetailActivity.class);
-            BillModel bm =(BillModel) adapterView.getAdapter().getItem(i);
-            intent.putExtra("bill",bm);
+            Intent intent = new Intent(getActivity(), billDetailActivity.class);
+            BillModel bm = (BillModel) adapterView.getAdapter().getItem(i);
+            intent.putExtra("bill", bm);
             startActivity(intent);
         }
     };
-    class activeTask extends AsyncTask<String,Void,List<BillModel>>{
+
+    class activeTask extends AsyncTask<String, Void, List<BillModel>> {
         BufferedReader bf;
         HttpURLConnection connection;
+
         @Override
         protected List<BillModel> doInBackground(String... strings) {
             List<BillModel> bmList = new ArrayList<>();
@@ -101,7 +108,7 @@ public class BillsFragment extends Fragment implements TabHost.OnTabChangeListen
                 connection = (HttpURLConnection) url.openConnection();
                 connection.connect();
                 InputStream stream = connection.getInputStream();
-                bf= new BufferedReader(new InputStreamReader(stream));
+                bf = new BufferedReader(new InputStreamReader(stream));
                 String line = "";
                 StringBuffer buffer = new StringBuffer();
                 while ((line = bf.readLine()) != null) {
@@ -111,30 +118,30 @@ public class BillsFragment extends Fragment implements TabHost.OnTabChangeListen
 
                 JSONArray results = new JSONObject(buffer.toString()).getJSONArray("results");
 
-                for(int i = 0 ;i < results.length();i++){
+                for (int i = 0; i < results.length(); i++) {
                     JSONObject bill = results.getJSONObject(i);
                     BillModel bm = new BillModel();
                     bm.setId(bill.getString("bill_id"));
                     bm.setIntro(bill.getString("introduced_on"));
                     bm.setTitile(bill.getString("official_title"));
                     bm.setType(bill.getString("bill_type"));
-                    JSONObject sponsor= bill.getJSONObject("sponsor");
-                    String spons = sponsor.getString("title")+". "+sponsor.getString("last_name")+sponsor.getString("first_name");
+                    JSONObject sponsor = bill.getJSONObject("sponsor");
+                    String spons = sponsor.getString("title") + ". " + sponsor.getString("last_name") + ", " + sponsor.getString("first_name");
                     bm.setSponsor(spons);
                     bm.setChamber(bill.getString("chamber"));
                     bm.setStatus("Active");
-                    JSONObject urls= bill.getJSONObject("urls");
+                    JSONObject urls = bill.getJSONObject("urls");
                     bm.setCurl(urls.getString("congress"));
-                    if(bill.has("last_version")&&!bill.isNull("last_version")) {
+                    if (bill.has("last_version") && !bill.isNull("last_version")) {
                         JSONObject lastVersion = bill.getJSONObject("last_version");
                         bm.setVstatus(lastVersion.getString("version_name"));
-                        if(lastVersion.has("urls")&&!bill.isNull("urls")) {
+                        if (lastVersion.has("urls") && !bill.isNull("urls")) {
                             JSONObject pdf = lastVersion.getJSONObject("urls");
                             bm.setBurl(pdf.getString("pdf"));
-                        }else{
+                        } else {
                             bm.setBurl("N.A.");
                         }
-                    }else{
+                    } else {
                         bm.setVstatus("N.A.");
                         bm.setBurl("N.A.");
                     }
@@ -146,12 +153,12 @@ public class BillsFragment extends Fragment implements TabHost.OnTabChangeListen
                 e.printStackTrace();
             } catch (JSONException e) {
                 e.printStackTrace();
-            }finally {
-                if(connection!=null) {
+            } finally {
+                if (connection != null) {
                     connection.disconnect();
                 }
                 try {
-                    if(bf!=null) bf.close();
+                    if (bf != null) bf.close();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -161,14 +168,27 @@ public class BillsFragment extends Fragment implements TabHost.OnTabChangeListen
 
         @Override
         protected void onPostExecute(List<BillModel> billModels) {
-            BillAdapter adapter = new BillAdapter(getActivity().getApplicationContext(), R.layout.billrow,billModels);
+            Activity myActivity = getActivity();
+            if (myActivity == null) return;
+            BillAdapter adapter = new BillAdapter(myActivity.getApplicationContext(), R.layout.billrow, billModels);
+            adapter.sort(new Comparator<BillModel>() {
+                @Override
+                public int compare(BillModel l1, BillModel l2) {
+                    String s1 = l1.getIntro(), s2 = l2.getIntro();
+                    return s2.compareTo(s1);
+
+                }
+            });
             activeList.setAdapter(adapter);
+
 
         }
     }
-    class newTask extends AsyncTask<String,Void,List<BillModel>>{
+
+    class newTask extends AsyncTask<String, Void, List<BillModel>> {
         BufferedReader bf;
         HttpURLConnection connection;
+
         @Override
         protected List<BillModel> doInBackground(String... strings) {
             List<BillModel> bmList = new ArrayList<>();
@@ -177,7 +197,7 @@ public class BillsFragment extends Fragment implements TabHost.OnTabChangeListen
                 connection = (HttpURLConnection) url.openConnection();
                 connection.connect();
                 InputStream stream = connection.getInputStream();
-                bf= new BufferedReader(new InputStreamReader(stream));
+                bf = new BufferedReader(new InputStreamReader(stream));
                 String line = "";
                 StringBuffer buffer = new StringBuffer();
                 while ((line = bf.readLine()) != null) {
@@ -187,30 +207,30 @@ public class BillsFragment extends Fragment implements TabHost.OnTabChangeListen
 
                 JSONArray results = new JSONObject(buffer.toString()).getJSONArray("results");
 
-                for(int i = 0 ;i < results.length();i++){
+                for (int i = 0; i < results.length(); i++) {
                     JSONObject bill = results.getJSONObject(i);
                     BillModel bm = new BillModel();
                     bm.setId(bill.getString("bill_id"));
                     bm.setIntro(bill.getString("introduced_on"));
                     bm.setTitile(bill.getString("official_title"));
                     bm.setType(bill.getString("bill_type"));
-                    JSONObject sponsor= bill.getJSONObject("sponsor");
-                    String spons = sponsor.getString("title")+". "+sponsor.getString("last_name")+sponsor.getString("first_name");
+                    JSONObject sponsor = bill.getJSONObject("sponsor");
+                    String spons = sponsor.getString("title") + ". " + sponsor.getString("last_name") + ", " + sponsor.getString("first_name");
                     bm.setSponsor(spons);
                     bm.setChamber(bill.getString("chamber"));
                     bm.setStatus("New");
-                    JSONObject urls= bill.getJSONObject("urls");
+                    JSONObject urls = bill.getJSONObject("urls");
                     bm.setCurl(urls.getString("congress"));
-                    if(bill.has("last_version")&&!bill.isNull("last_version")) {
+                    if (bill.has("last_version") && !bill.isNull("last_version")) {
                         JSONObject lastVersion = bill.getJSONObject("last_version");
                         bm.setVstatus(lastVersion.getString("version_name"));
-                        if(lastVersion.has("urls")&&!bill.isNull("urls")) {
+                        if (lastVersion.has("urls") && !bill.isNull("urls")) {
                             JSONObject pdf = lastVersion.getJSONObject("urls");
                             bm.setBurl(pdf.getString("pdf"));
-                        }else{
+                        } else {
                             bm.setBurl("N.A.");
                         }
-                    }else{
+                    } else {
                         bm.setVstatus("N.A.");
                         bm.setBurl("N.A.");
                     }
@@ -221,12 +241,12 @@ public class BillsFragment extends Fragment implements TabHost.OnTabChangeListen
                 e.printStackTrace();
             } catch (JSONException e) {
                 e.printStackTrace();
-            }finally {
-                if(connection!=null) {
+            } finally {
+                if (connection != null) {
                     connection.disconnect();
                 }
                 try {
-                    if(bf!=null) bf.close();
+                    if (bf != null) bf.close();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -236,11 +256,22 @@ public class BillsFragment extends Fragment implements TabHost.OnTabChangeListen
 
         @Override
         protected void onPostExecute(List<BillModel> billModels) {
-            BillAdapter adapter = new BillAdapter(getActivity().getApplicationContext(), R.layout.billrow,billModels);
+            Activity myActivity = getActivity();
+            if (myActivity == null) return;
+            adapter = new BillAdapter(myActivity.getApplicationContext(), R.layout.billrow, billModels);
+            adapter.sort(new Comparator<BillModel>() {
+                @Override
+                public int compare(BillModel l1, BillModel l2) {
+                    String s1 = l1.getIntro(), s2 = l2.getIntro();
+                    return s2.compareTo(s1);
+
+                }
+            });
             newList.setAdapter(adapter);
 
         }
     }
+
     class BillAdapter extends ArrayAdapter {
         private List<BillModel> billList;
         private int resource;
@@ -261,10 +292,10 @@ public class BillsFragment extends Fragment implements TabHost.OnTabChangeListen
             if (convertView == null) {
                 convertView = inflater.inflate(resource, null);
             }
-            TextView tvid, tvintro,tvtitle;
-            tvid =(TextView)convertView.findViewById(R.id.bdeid);
-            tvintro =(TextView)convertView.findViewById(R.id.bdeintro);
-            tvtitle =(TextView)convertView.findViewById(R.id.bdetitle);
+            TextView tvid, tvintro, tvtitle;
+            tvid = (TextView) convertView.findViewById(R.id.bdeid);
+            tvintro = (TextView) convertView.findViewById(R.id.bdeintro);
+            tvtitle = (TextView) convertView.findViewById(R.id.bdetitle);
             tvid.setText(billList.get(position).getId().toUpperCase());
             tvintro.setText(billList.get(position).getIntro());
             tvtitle.setText(billList.get(position).getTitile());

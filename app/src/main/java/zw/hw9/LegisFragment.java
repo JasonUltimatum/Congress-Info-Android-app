@@ -1,6 +1,7 @@
 package zw.hw9;
 
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -113,17 +114,28 @@ public class LegisFragment extends Fragment implements TabHost.OnTabChangeListen
             String index = temp.getState().substring(0,1).toUpperCase();
             if(map.get(index)==null) {
                 map.put(index, i);
+
             }
         }
     }
 
-    private void getNameIndex(List<LegislatorModel> list){
-        map = new LinkedHashMap<>();
+    private void getHouseIndex(List<LegislatorModel> list){
+        houseMap = new LinkedHashMap<>();
         for(int i =0;i<list.size();i++){
             LegislatorModel temp = list.get(i);
             String index = temp.getName().substring(0,1).toUpperCase();
-            if(map.get(index)==null) {
-                map.put(index, i);
+            if(houseMap.get(index)==null) {
+                houseMap.put(index, i);
+            }
+        }
+    }
+    private void getSenateIndex(List<LegislatorModel> list){
+        senateMap = new LinkedHashMap<>();
+        for(int i =0;i<list.size();i++){
+            LegislatorModel temp = list.get(i);
+            String index = temp.getName().substring(0,1).toUpperCase();
+            if(senateMap.get(index)==null) {
+                senateMap.put(index, i);
             }
         }
     }
@@ -131,7 +143,18 @@ public class LegisFragment extends Fragment implements TabHost.OnTabChangeListen
     private void displayIndex(LinearLayout sideLayout){
 
         TextView tv;
-        List<String> sideIndex = new ArrayList<>(map.keySet());
+        Map<String,Integer> temp = null;
+
+        if( sideLayout.getId()==R.id.stateside){
+            temp = map;
+        }
+        if(sideLayout.getId()==R.id.houseside){
+            temp = houseMap;
+        }
+        if(sideLayout.getId()==R.id.senateside){
+            temp = senateMap;
+        }
+        List<String> sideIndex = new ArrayList<>(temp.keySet());
         for(String index: sideIndex){
             tv = (TextView) getActivity().getLayoutInflater().inflate(R.layout.side_index_item,null);
             tv.setText(index);
@@ -146,7 +169,7 @@ public class LegisFragment extends Fragment implements TabHost.OnTabChangeListen
         }
 
         if(tbHost.getCurrentTab()==1) {
-            houseList.setSelection(map.get(selected.getText()));
+            houseList.setSelection(houseMap.get(selected.getText()));
         }
         if(tbHost.getCurrentTab()==2) {
             senateList.setSelection(map.get(selected.getText()));
@@ -215,6 +238,21 @@ public class LegisFragment extends Fragment implements TabHost.OnTabChangeListen
                     lModel.setSt(results.getString("state"));
                     lModel.setFax(results.getString("fax")==null?"N.A.":results.getString("fax"));
                     lModel.setBirth(results.getString("birthday"));
+                    if(results.has("twitter_id")&&!results.isNull("twitter_id")){
+                        lModel.setTwitter(results.getString("twitter_id"));
+                    }else{
+                        lModel.setTwitter("None");
+                    }
+                    if(results.has("facebook_id")&&!results.isNull("facebook_id")){
+                        lModel.setFacebook(results.getString("facebook_id"));
+                    }else{
+                        lModel.setFacebook("None");
+                    }
+                    if(results.has("website")&&!results.isNull("website")){
+                        lModel.setWebsite(results.getString("website"));
+                    }else{
+                        lModel.setWebsite("None");
+                    }
                     lModelList.add(lModel);
                 }
                 //publishProgress(buffer.toString());
@@ -248,7 +286,9 @@ public class LegisFragment extends Fragment implements TabHost.OnTabChangeListen
         @Override
         protected void onPostExecute(List<LegislatorModel> result) {
             //TODO need to set data to the list
-            LegislatorAdapter adapter = new LegislatorAdapter(getActivity().getApplicationContext(),R.layout.legrow,result);
+            Activity myActivity = getActivity();
+            if (myActivity==null) return;
+            LegislatorAdapter adapter = new LegislatorAdapter(myActivity.getApplicationContext(),R.layout.legrow,result);
             adapter.sort(new Comparator<LegislatorModel>() {
                 @Override
                 public int compare(LegislatorModel l1, LegislatorModel l2) {
@@ -256,7 +296,7 @@ public class LegisFragment extends Fragment implements TabHost.OnTabChangeListen
                 }
             });
             mainList.setAdapter(adapter);
-            getIndex(result);
+            getIndex(adapter.legList);
             LinearLayout sideLayout = (LinearLayout)getActivity().findViewById(R.id.stateside);
             displayIndex(sideLayout);
 
@@ -310,7 +350,7 @@ public class LegisFragment extends Fragment implements TabHost.OnTabChangeListen
                     lModel.setState(state);
                     lModel.setFullname(results.getString("title")+". "+name);
                     String email =results.getString("oc_email");
-
+                    lModel.setChamber(results.getString("chamber"));
                     lModel.setEmail(email ==null?"N.A.":email);
                     lModel.setContact(results.getString("phone"));
                     lModel.setStartTerm(results.getString("term_start"));
@@ -319,6 +359,23 @@ public class LegisFragment extends Fragment implements TabHost.OnTabChangeListen
                     lModel.setSt(results.getString("state"));
                     lModel.setFax(results.getString("fax")==null?"N.A.":results.getString("fax"));
                     lModel.setBirth(results.getString("birthday"));
+
+                    if(results.has("twitter_id")&&!results.isNull("twitter_id")){
+                        lModel.setTwitter(results.getString("twitter_id"));
+                    }else{
+                        lModel.setTwitter("None");
+                    }
+                    if(results.has("facebook_id")&&!results.isNull("facebook_id")){
+                        lModel.setFacebook(results.getString("facebook_id"));
+                    }else{
+                        lModel.setFacebook("None");
+                    }
+                    if(results.has("website")&&!results.isNull("website")){
+                        lModel.setWebsite(results.getString("website"));
+                    }else{
+                        lModel.setWebsite("None");
+                    }
+
                     lModelList.add(lModel);
                 }
                 //publishProgress(buffer.toString());
@@ -352,7 +409,9 @@ public class LegisFragment extends Fragment implements TabHost.OnTabChangeListen
         @Override
         protected void onPostExecute(List<LegislatorModel> result) {
             //TODO need to set data to the list
-            LegislatorAdapter adapter = new LegislatorAdapter(getActivity().getApplicationContext(),R.layout.legrow,result);
+            Activity myActivity = getActivity();
+            if (myActivity==null) return;
+            LegislatorAdapter adapter = new LegislatorAdapter(myActivity.getApplicationContext(),R.layout.legrow,result);
             adapter.sort(new Comparator<LegislatorModel>() {
                 @Override
                 public int compare(LegislatorModel l1, LegislatorModel l2) {
@@ -363,7 +422,7 @@ public class LegisFragment extends Fragment implements TabHost.OnTabChangeListen
                 }
             });
             houseList.setAdapter(adapter);
-            getNameIndex(adapter.legList);
+            getHouseIndex(adapter.legList);
             LinearLayout sideLayout = (LinearLayout)getActivity().findViewById(R.id.houseside);
             displayIndex(sideLayout);
 
@@ -417,6 +476,7 @@ public class LegisFragment extends Fragment implements TabHost.OnTabChangeListen
                     lModel.setState(state);
                     lModel.setFullname(results.getString("title")+". "+name);
                     String email =results.getString("oc_email");
+                    lModel.setChamber(results.getString("chamber"));
 
                     lModel.setEmail(email ==null?"N.A.":email);
                     lModel.setContact(results.getString("phone"));
@@ -426,6 +486,23 @@ public class LegisFragment extends Fragment implements TabHost.OnTabChangeListen
                     lModel.setSt(results.getString("state"));
                     lModel.setFax(results.getString("fax")==null?"N.A.":results.getString("fax"));
                     lModel.setBirth(results.getString("birthday"));
+
+                    if(results.has("twitter_id")&&!results.isNull("twitter_id")){
+                        lModel.setTwitter(results.getString("twitter_id"));
+                    }else{
+                        lModel.setTwitter("None");
+                    }
+                    if(results.has("facebook_id")&&!results.isNull("facebook_id")){
+                        lModel.setFacebook(results.getString("facebook_id"));
+                    }else{
+                        lModel.setFacebook("None");
+                    }
+                    if(results.has("website")&&!results.isNull("website")){
+                        lModel.setWebsite(results.getString("website"));
+                    }else{
+                        lModel.setWebsite("None");
+                    }
+
                     lModelList.add(lModel);
 
                 }
@@ -460,7 +537,9 @@ public class LegisFragment extends Fragment implements TabHost.OnTabChangeListen
         @Override
         protected void onPostExecute(List<LegislatorModel> result) {
             //TODO need to set data to the list
-            LegislatorAdapter adapter = new LegislatorAdapter(getActivity().getApplicationContext(),R.layout.legrow,result);
+            Activity myActivity = getActivity();
+            if (myActivity==null) return;
+            LegislatorAdapter adapter = new LegislatorAdapter(myActivity.getApplicationContext(),R.layout.legrow,result);
             adapter.sort(new Comparator<LegislatorModel>() {
                 @Override
                 public int compare(LegislatorModel l1, LegislatorModel l2) {
@@ -471,14 +550,14 @@ public class LegisFragment extends Fragment implements TabHost.OnTabChangeListen
                 }
             });
             senateList.setAdapter(adapter);
-            getNameIndex(adapter.legList);
+            getSenateIndex(adapter.legList);
             LinearLayout sideLayout = (LinearLayout)getActivity().findViewById(R.id.senateside);
             displayIndex(sideLayout);
         }
 
     }
     class LegislatorAdapter extends ArrayAdapter{
-               private List<LegislatorModel> legList;
+               public List<LegislatorModel> legList;
         private int resource;
         private LayoutInflater inflater;
         private Context context;

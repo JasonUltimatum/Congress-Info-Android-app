@@ -6,8 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingBottom="0dp"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
+
     android:paddingTop="0dp"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="zw.hw9.MainActivity"
