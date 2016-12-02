@@ -47,7 +47,7 @@ public class billDetailActivity extends AppCompatActivity {
         tvstatus = (TextView)findViewById(R.id.bdestatus);
         tvstatus.setText(bm.getStatus());
         tvintro = (TextView)findViewById(R.id.bdeintro);
-        tvintro.setText(bm.getIntro());
+        tvintro.setText(DateTransform.transform(bm.getIntro()));
         tvcurl= (TextView)findViewById(R.id.bdecongress);
         tvcurl.setText(bm.getCurl());
         tvvstatus = (TextView)findViewById(R.id.bdevstatus);

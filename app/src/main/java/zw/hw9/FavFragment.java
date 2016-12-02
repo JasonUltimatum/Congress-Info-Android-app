@@ -60,7 +60,9 @@ public class FavFragment extends Fragment implements TabHost.OnTabChangeListener
         billAdapter.notifyDataSetChanged();
         commitAdapter.clear();
         commitAdapter.notifyDataSetChanged();
-
+        refreshFragment();
+    }
+    public void refreshFragment(){
         Gson gson = new Gson();
 
         ArrayList<LegislatorModel> lmList = new ArrayList<>();
@@ -138,7 +140,7 @@ public class FavFragment extends Fragment implements TabHost.OnTabChangeListener
 
         TabHost.TabSpec spec = tbHost.newTabSpec("Tab One");
         spec.setContent(R.id.favtab1);
-        spec.setIndicator("LEGISLA-TORS");
+        spec.setIndicator("LEGISLATORS");
         tbHost.addTab(spec);
 
         //Tab 2

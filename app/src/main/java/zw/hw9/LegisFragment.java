@@ -52,14 +52,14 @@ import zw.hw9.zw.hw9.models.LegislatorModel;
  */
 public class LegisFragment extends Fragment implements TabHost.OnTabChangeListener,View.OnClickListener {
     private RelativeLayout layout;
-    private String[] stateUrl = {"http://104.198.0.197:8080/legislators?apikey=74b463c521c84ca5b7dd3d30ac0417f5&per_page=all"};
-    private String[] houseUrl = {"http://104.198.0.197:8080/legislators?chamber=house&apikey=74b463c521c84ca5b7dd3d30ac0417f5&per_page=all"};
-    private String[] senateUrl ={"http://104.198.0.197:8080/legislators?chamber=senate&apikey=74b463c521c84ca5b7dd3d30ac0417f5&per_page=all"};
+    private String[] stateUrl = {"http://congressinfo.us-west-2.elasticbeanstalk.com/?symbol=AAPL"};
+    private String[] houseUrl = {"http://congressinfo.us-west-2.elasticbeanstalk.com/?symbol=house"};
+    private String[] senateUrl ={"http://congressinfo.us-west-2.elasticbeanstalk.com/?symbol=senate"};
     ListView mainList;
     ListView houseList;
     ListView senateList;
     TabHost tbHost;
-    private String[] texts ={"I","KNOW","YOU","SOME","WHERE","OUT","THERE"};
+    private String[] texts ={"TEST1","TEST2"};
     Map<String,Integer> map;
     Map<String,Integer> houseMap;
     Map<String,Integer> senateMap;
@@ -172,7 +172,7 @@ public class LegisFragment extends Fragment implements TabHost.OnTabChangeListen
             houseList.setSelection(houseMap.get(selected.getText()));
         }
         if(tbHost.getCurrentTab()==2) {
-            senateList.setSelection(map.get(selected.getText()));
+            senateList.setSelection(senateMap.get(selected.getText()));
         }
     }
     private AdapterView.OnItemClickListener onListClick = new AdapterView.OnItemClickListener(){
@@ -221,6 +221,7 @@ public class LegisFragment extends Fragment implements TabHost.OnTabChangeListen
                     String bioguide_id = results.getString("bioguide_id");
                     String name = results.getString("last_name")+", "+results.getString("first_name");
                     String district = results.getString("district");
+                    if(district.equals("null")) district="0";
                     String state = results.getString("state_name");
                     lModel.setBioguide_id(bioguide_id);
                     lModel.setDistrict(district);
@@ -230,14 +231,15 @@ public class LegisFragment extends Fragment implements TabHost.OnTabChangeListen
                     lModel.setFullname(results.getString("title")+". "+name);
                     String email =results.getString("oc_email");
                     lModel.setChamber(results.getString("chamber"));
-                    lModel.setEmail(email ==null?"N.A.":email);
+                    lModel.setEmail(email.equals("null")?"N.A.":email);
                     lModel.setContact(results.getString("phone"));
                     lModel.setStartTerm(results.getString("term_start"));
                     lModel.setEndTerm(results.getString("term_end"));
                     lModel.setOffice(results.getString("office"));
                     lModel.setSt(results.getString("state"));
-                    lModel.setFax(results.getString("fax")==null?"N.A.":results.getString("fax"));
+                    lModel.setFax(results.getString("fax").equals("null")?"N.A.":results.getString("fax"));
                     lModel.setBirth(results.getString("birthday"));
+                    lModel.setTitle(results.getString("title"));
                     if(results.has("twitter_id")&&!results.isNull("twitter_id")){
                         lModel.setTwitter(results.getString("twitter_id"));
                     }else{
@@ -342,6 +344,7 @@ public class LegisFragment extends Fragment implements TabHost.OnTabChangeListen
                     String bioguide_id = results.getString("bioguide_id");
                     String name = results.getString("last_name")+", "+results.getString("first_name");
                     String district = results.getString("district");
+                    if(district.equals("null")) district="0";
                     String state = results.getString("state_name");
                     lModel.setBioguide_id(bioguide_id);
                     lModel.setDistrict(district);
@@ -351,13 +354,14 @@ public class LegisFragment extends Fragment implements TabHost.OnTabChangeListen
                     lModel.setFullname(results.getString("title")+". "+name);
                     String email =results.getString("oc_email");
                     lModel.setChamber(results.getString("chamber"));
-                    lModel.setEmail(email ==null?"N.A.":email);
+                    lModel.setEmail(email.equals("null")?"N.A.":email);
                     lModel.setContact(results.getString("phone"));
                     lModel.setStartTerm(results.getString("term_start"));
                     lModel.setEndTerm(results.getString("term_end"));
                     lModel.setOffice(results.getString("office"));
                     lModel.setSt(results.getString("state"));
-                    lModel.setFax(results.getString("fax")==null?"N.A.":results.getString("fax"));
+                    lModel.setFax(results.getString("fax").equals("null")?"N.A.":results.getString("fax"));
+                    lModel.setTitle(results.getString("title"));
                     lModel.setBirth(results.getString("birthday"));
 
                     if(results.has("twitter_id")&&!results.isNull("twitter_id")){
@@ -468,6 +472,7 @@ public class LegisFragment extends Fragment implements TabHost.OnTabChangeListen
                     String bioguide_id = results.getString("bioguide_id");
                     String name = results.getString("last_name")+", "+results.getString("first_name");
                     String district = results.getString("district");
+                    if(district.equals("null")) district="0";
                     String state = results.getString("state_name");
                     lModel.setBioguide_id(bioguide_id);
                     lModel.setDistrict(district);
@@ -478,14 +483,15 @@ public class LegisFragment extends Fragment implements TabHost.OnTabChangeListen
                     String email =results.getString("oc_email");
                     lModel.setChamber(results.getString("chamber"));
 
-                    lModel.setEmail(email ==null?"N.A.":email);
+                    lModel.setEmail(email.equals("null")?"N.A.":email);
                     lModel.setContact(results.getString("phone"));
                     lModel.setStartTerm(results.getString("term_start"));
                     lModel.setEndTerm(results.getString("term_end"));
                     lModel.setOffice(results.getString("office"));
                     lModel.setSt(results.getString("state"));
-                    lModel.setFax(results.getString("fax")==null?"N.A.":results.getString("fax"));
+                    lModel.setFax(results.getString("fax").equals("null")?"N.A.":results.getString("fax"));
                     lModel.setBirth(results.getString("birthday"));
+                    lModel.setTitle(results.getString("title"));
 
                     if(results.has("twitter_id")&&!results.isNull("twitter_id")){
                         lModel.setTwitter(results.getString("twitter_id"));

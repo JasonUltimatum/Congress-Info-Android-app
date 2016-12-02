@@ -11,10 +11,13 @@ import java.util.Date;
 
 public class DateTransform {
     public static String transform(String input){
+
+        Date d;
+        String old ="yyyy-MM-dd";
+        String after = "MMM dd,yyyy";
+        SimpleDateFormat format1 = new SimpleDateFormat(old);
+        SimpleDateFormat format2 = new SimpleDateFormat(after);
         String res =null;
-        Date d =null;
-        SimpleDateFormat format1 = new SimpleDateFormat("yyyy-mm-dd");
-        SimpleDateFormat format2 = new SimpleDateFormat("MMM DD,yyyy");
         try{
             d = format1.parse(input);
             res = format2.format(d);

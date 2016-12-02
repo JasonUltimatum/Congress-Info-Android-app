@@ -60,7 +60,7 @@
                             android:background="#c3c3c3"
                             android:layout_gravity="end"
                             android:id="@+id/stateside"
-                            android:layout_width="30dp" >
+                            android:layout_width="24dp" >
 
                         </LinearLayout>
 
@@ -68,7 +68,7 @@
                             android:scrollbars="none"
                             android:id="@+id/listviewstate"
                             android:layout_height="wrap_content"
-                            android:layout_width="330dp" />
+                            android:layout_width="360dp" />
                     </FrameLayout>
 
 
@@ -91,7 +91,7 @@
                             android:background="#c3c3c3"
                             android:layout_gravity="end"
                             android:id="@+id/houseside"
-                            android:layout_width="30dp">
+                            android:layout_width="24dp">
 
                         </LinearLayout>
 
@@ -99,7 +99,7 @@
                             android:scrollbars="none"
                             android:id="@+id/listviewhouse"
                             android:layout_height="wrap_content"
-                            android:layout_width="330dp" />
+                            android:layout_width="360dp" />
                     </FrameLayout>
                 </LinearLayout>
 
@@ -120,7 +120,7 @@
                             android:background="#c3c3c3"
                             android:layout_gravity="end"
                             android:id="@+id/senateside"
-                            android:layout_width="30dp">
+                            android:layout_width="24dp">
 
                         </LinearLayout>
 
@@ -128,7 +128,7 @@
                             android:scrollbars="none"
                             android:id="@+id/listviewsenate"
                             android:layout_height="wrap_content"
-                            android:layout_width="330dp" />
+                            android:layout_width="360dp" />
                     </FrameLayout>
                 </LinearLayout>
 

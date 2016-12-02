@@ -73,7 +73,7 @@
                 android:textStyle="bold"
                 android:textColor="#000000"
                 android:layout_weight="1"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:id="@+id/textView"
                 android:textAlignment="viewStart"
@@ -82,7 +82,7 @@
             <TextView
                 android:text="TextView"
                 android:layout_weight="1"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:id="@+id/bdetitle"
                 android:textAlignment="viewEnd"
@@ -225,7 +225,7 @@
                 android:textStyle="bold"
                 android:textColor="#000000"
                 android:layout_weight="1"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:textAlignment="viewStart"
                 android:layout_gravity="start" />
@@ -233,7 +233,7 @@
             <TextView
                 android:text="TextView"
                 android:layout_weight="1"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:id="@+id/bdecongress"
                 android:textAlignment="viewEnd"
@@ -275,7 +275,7 @@
                 android:textStyle="bold"
                 android:textColor="#000000"
                 android:layout_weight="1"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:textAlignment="viewStart"
                 android:layout_gravity="start" />
@@ -283,7 +283,7 @@
             <TextView
                 android:text="TextView"
                 android:layout_weight="1"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:id="@+id/bdeburl"
                 android:textAlignment="viewEnd"

@@ -32,6 +32,15 @@ public class LegislatorModel implements Serializable{
     private String twitter;
     private String facebook;
     private String website;
+    private String title;
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
     public String getTwitter() {
         return twitter;

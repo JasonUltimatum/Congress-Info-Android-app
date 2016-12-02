@@ -75,7 +75,7 @@ public class legDetailActivity extends AppCompatActivity {
                 }
                 //set name
                 TextView tvname = (TextView) findViewById(R.id.dename);
-                tvname.setText(lm.getName());
+                tvname.setText(lm.getTitle()+". "+lm.getName());
 
                 TextView tvemail = (TextView) findViewById(R.id.deemail);
                 tvemail.setText(lm.getEmail());
@@ -90,9 +90,12 @@ public class legDetailActivity extends AppCompatActivity {
                 TextView tvend = (TextView) findViewById(R.id.deend);
                 tvend.setText(DateTransform.transform(lm.getEndTerm()));
                 ProgressBar pbterm = (ProgressBar) findViewById(R.id.determ);
-                pbterm.setProgress(calculateTerm(lm.getEndTerm(), lm.getStartTerm()));
-
-
+                int percentNumber =calculateTerm(lm.getEndTerm(), lm.getStartTerm());
+                pbterm.setProgress(percentNumber);
+                TextView percent;
+                percent = (TextView) findViewById(R.id.percentage);
+                String percentText = percentNumber+"%";
+                percent.setText(percentText);
                 TextView tvoffcie = (TextView) findViewById(R.id.deoffice);
                 tvoffcie.setText(lm.getOffice());
                 TextView tvst = (TextView) findViewById(R.id.destate);
@@ -108,7 +111,7 @@ public class legDetailActivity extends AppCompatActivity {
                                                  public void onClick(View view) {
                                                      String website = lm.getWebsite();
                                                      if (website.equals("None")) {
-                                                         Toast.makeText(getApplication().getBaseContext(), "No website!", Toast.LENGTH_SHORT).show();
+                                                         Toast.makeText(getApplication().getBaseContext(), "Website Not Available", Toast.LENGTH_SHORT).show();
                                                      } else {
                                                          Intent webIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(website));
                                                          startActivity(webIntent);
@@ -122,7 +125,7 @@ public class legDetailActivity extends AppCompatActivity {
                     public void onClick(View view) {
                         String twitter = lm.getTwitter();
                         if (twitter.equals("None")) {
-                            Toast.makeText(getApplication().getBaseContext(), "No twitter!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplication().getBaseContext(), "Twitter Not Available", Toast.LENGTH_SHORT).show();
                         } else {
                             Intent twitterIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://mobile.twitter.com/" + twitter));
                             startActivity(twitterIntent);
@@ -135,7 +138,7 @@ public class legDetailActivity extends AppCompatActivity {
                     public void onClick(View view) {
                         String facebook = lm.getFacebook();
                         if (facebook.equals("None")) {
-                            Toast.makeText(getApplication().getBaseContext(), "No facebook!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplication().getBaseContext(), "Facebook Not Available", Toast.LENGTH_SHORT).show();
                         } else {
                             Intent fbIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://m.facebook.com/" + facebook));
                             startActivity(fbIntent);

@@ -18,6 +18,7 @@ public class BillModel implements Serializable {
     private String vstatus;
     private String burl;
 
+
     public String getType() {
         return type;
     }

@@ -41,9 +41,9 @@ import zw.hw9.zw.hw9.models.CommitModel;
  * A simple {@link Fragment} subclass.
  */
 public class CommitFragment extends Fragment implements TabHost.OnTabChangeListener {
-    private String[] house = {"http://104.198.0.197:8080/committees?chamber=house&apikey=74b463c521c84ca5b7dd3d30ac0417f5&per_page=all"};
-    private String[] senate = {"http://104.198.0.197:8080/committees?chamber=senate&apikey=74b463c521c84ca5b7dd3d30ac0417f5&per_page=all"};
-    private String[] joint = {"http://104.198.0.197:8080/committees?chamber=joint&apikey=74b463c521c84ca5b7dd3d30ac0417f5&per_page=all"};
+    private String[] house = {"http://congressinfo.us-west-2.elasticbeanstalk.com/?symbol=houseC"};
+    private String[] senate = {"http://congressinfo.us-west-2.elasticbeanstalk.com/?symbol=senateC"};
+    private String[] joint = {"http://congressinfo.us-west-2.elasticbeanstalk.com/?symbol=jointC"};
     ListView houseList;
     ListView senateList;
     ListView jointList;
@@ -143,8 +143,8 @@ public class CommitFragment extends Fragment implements TabHost.OnTabChangeListe
                     }else{
                         cm.setOffice("N.A.");
                     }
-                    if(commit.has("contact")&&!commit.isNull("contact")) {
-                        cm.setContact(commit.getString("contact"));
+                    if(commit.has("phone")&&!commit.isNull("phone")) {
+                        cm.setContact(commit.getString("phone"));
                     }else{
                         cm.setContact("N.A.");
                     }

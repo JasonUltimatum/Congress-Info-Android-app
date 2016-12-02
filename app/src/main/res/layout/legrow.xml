@@ -2,21 +2,23 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:background="@drawable/rowstyle"
     android:padding="4dp"
     android:weightSum="1">
 
     <FrameLayout
         android:layout_width="wrap_content"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
         <ImageView
             android:id="@+id/legphoto"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
             android:layout_marginLeft="10dp"
-            android:src="@mipmap/ic_launcher" />
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:src="@mipmap/ic_launcher"
+            android:layout_width="50dp"
+            android:layout_height="50dp" />
 
     </FrameLayout>
 
@@ -46,8 +48,8 @@
                 android:layout_marginStart="100dp"
                 android:paddingBottom="5dp"
                 android:src="@drawable/forward"
-                android:layout_width="25dp"
-                android:layout_height="25dp" />
+                android:layout_width="20dp"
+                android:layout_height="20dp" />
 
             <TextView
                 android:id="@+id/legpsd"

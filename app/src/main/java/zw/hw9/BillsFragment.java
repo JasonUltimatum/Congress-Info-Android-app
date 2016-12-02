@@ -41,8 +41,8 @@ import zw.hw9.zw.hw9.models.BillModel;
  * A simple {@link Fragment} subclass.
  */
 public class BillsFragment extends Fragment implements TabHost.OnTabChangeListener {
-    private String[] activeUrl = {"http://104.198.0.197:8080/bills?history.active=true&apikey=74b463c521c84ca5b7dd3d30ac0417f5&per_page=50"};
-    private String[] newUrl = {"http://104.198.0.197:8080/bills?history.active=false&apikey=74b463c521c84ca5b7dd3d30ac0417f5&per_page=50"};
+    private String[] activeUrl = {"http://congressinfo.us-west-2.elasticbeanstalk.com/?symbol=activeBill"};
+    private String[] newUrl = {"http://congressinfo.us-west-2.elasticbeanstalk.com/?symbol=newBill"};
     ListView activeList;
     ListView newList;
     public static BillAdapter adapter;
@@ -297,7 +297,7 @@ public class BillsFragment extends Fragment implements TabHost.OnTabChangeListen
             tvintro = (TextView) convertView.findViewById(R.id.bdeintro);
             tvtitle = (TextView) convertView.findViewById(R.id.bdetitle);
             tvid.setText(billList.get(position).getId().toUpperCase());
-            tvintro.setText(billList.get(position).getIntro());
+            tvintro.setText(DateTransform.transform(billList.get(position).getIntro()));
             tvtitle.setText(billList.get(position).getTitile());
             return convertView;
         }
